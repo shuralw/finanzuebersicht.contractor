@@ -1,0 +1,12 @@
+<app-auswertung-settings [settings]="initialOptions" (update)="reload()"></app-auswertung-settings>
+<div style="padding: 6px;">
+  <div style="padding: 6px;">
+    <dx-switch [(value)]="showPositive" (onValueChanged)="updateChartData()"></dx-switch> Alle anzeigen
+  </div>
+  <br>
+
+  <dx-chart id="chart" palette="bright" [dataSource]="chartData" [customizePoint]="customizeColor" [rotated]="true">
+    <dxi-series argumentField="title" valueField="summe" type="bar"></dxi-series>
+    <dxo-legend [visible]="false"></dxo-legend>
+  </dx-chart>
+</div>

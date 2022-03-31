@@ -1,0 +1,36 @@
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConfirmationDialog } from 'src/app/components/ui/confirmation-dialog/confirmation-dialog.component';
+
+@Component({
+  selector: 'app-admin-email-user-create-and-update',
+  templateUrl: './admin-email-user-create-and-update.component.html',
+  styleUrls: ['./admin-email-user-create-and-update.component.scss']
+})
+export class AdminEmailUserCreateAndUpdateComponent {
+
+  isUpdating: boolean;
+
+  formGroup: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) data: any,
+    private dialogRef: MatDialogRef<ConfirmationDialog>) {
+
+    this.isUpdating = data?.email != null;
+
+    this.formGroup = this.formBuilder.group({
+      email: new FormControl(data?.email || '', [Validators.required, Validators.email, Validators.maxLength(256)]),
+    });
+  }
+
+  onConfirmClick(): void {
+    this.formGroup.markAllAsTouched();
+    if (this.formGroup.valid) {
+      this.dialogRef.close(this.formGroup.controls.email.value);
+    }
+  }
+
+}

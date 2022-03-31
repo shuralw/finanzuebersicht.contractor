@@ -1,0 +1,148 @@
+<div class="loading" *ngIf="!accountingEntry">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<div class="accounting-entry-detail-page" *ngIf="accountingEntry">
+    <div class="toolbar">
+        <h1>Buchung: {{accountingEntry.verwendungszweck}} ({{accountingEntry.buchungsdatum}})</h1>
+        <button mat-flat-button [routerLink]="['/accounting/accounting-entries']">
+            Schließen
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+            Ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+
+    <p>
+        <span style="font-size: 0.8em;">Category:</span>
+        <br>
+        <span *ngIf="!accountingEntry.category">-</span>
+        <a *ngIf="accountingEntry.category"
+            [routerLink]="['/accounting/categories/detail', accountingEntry.category.id]">
+            {{accountingEntry.category.title}}
+            <mat-icon style="font-size: 1em;">open_in_new</mat-icon>
+        </a>
+    </p>
+
+
+    <p [attr.aria-label]="'Auftragskonto: ' + accountingEntry.auftragskonto">
+        <span style="font-size: 0.8em;" aria-hidden="true">Auftragskonto:</span>
+        <br>
+        <span *ngIf="!accountingEntry.auftragskonto">-</span>
+        <span *ngIf="accountingEntry.auftragskonto" aria-hidden="true">{{accountingEntry.auftragskonto}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Buchungsdatum: ' + accountingEntry.buchungsdatum.toLocaleString()">
+        <span style="font-size: 0.8em;" aria-hidden="true">Buchungsdatum:</span>
+        <br>
+        <span *ngIf="!accountingEntry.buchungsdatum">-</span>
+        <span *ngIf="accountingEntry.buchungsdatum" aria-hidden="true">{{accountingEntry.buchungsdatum | date:'dd. MMM.
+            yyyy, HH:mm'}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Valuta Datum: ' + accountingEntry.valutaDatum.toLocaleString()">
+        <span style="font-size: 0.8em;" aria-hidden="true">Valuta Datum:</span>
+        <br>
+        <span *ngIf="!accountingEntry.valutaDatum">-</span>
+        <span *ngIf="accountingEntry.valutaDatum" aria-hidden="true">{{accountingEntry.valutaDatum | date:'dd. MMM.
+            yyyy, HH:mm'}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Buchungstext: ' + accountingEntry.buchungstext">
+        <span style="font-size: 0.8em;" aria-hidden="true">Buchungstext:</span>
+        <br>
+        <span *ngIf="!accountingEntry.buchungstext">-</span>
+        <span *ngIf="accountingEntry.buchungstext" aria-hidden="true">{{accountingEntry.buchungstext}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Verwendungszweck: ' + accountingEntry.verwendungszweck">
+        <span style="font-size: 0.8em;" aria-hidden="true">Verwendungszweck:</span>
+        <br>
+        <span *ngIf="!accountingEntry.verwendungszweck">-</span>
+        <span *ngIf="accountingEntry.verwendungszweck" aria-hidden="true">{{accountingEntry.verwendungszweck}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Gläubiger Id: ' + accountingEntry.glaeubigerId">
+        <span style="font-size: 0.8em;" aria-hidden="true">Gläubiger Id:</span>
+        <br>
+        <span *ngIf="!accountingEntry.glaeubigerId">-</span>
+        <span *ngIf="accountingEntry.glaeubigerId" aria-hidden="true">{{accountingEntry.glaeubigerId}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Mandatsreferenz: ' + accountingEntry.mandatsreferenz">
+        <span style="font-size: 0.8em;" aria-hidden="true">Mandatsreferenz:</span>
+        <br>
+        <span *ngIf="!accountingEntry.mandatsreferenz">-</span>
+        <span *ngIf="accountingEntry.mandatsreferenz" aria-hidden="true">{{accountingEntry.mandatsreferenz}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Sammlerreferenz: ' + accountingEntry.sammlerreferenz">
+        <span style="font-size: 0.8em;" aria-hidden="true">Sammlerreferenz:</span>
+        <br>
+        <span *ngIf="!accountingEntry.sammlerreferenz">-</span>
+        <span *ngIf="accountingEntry.sammlerreferenz" aria-hidden="true">{{accountingEntry.sammlerreferenz}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Lastschrift Ursprungsbetrag: ' + accountingEntry.lastschriftUrsprungsbetrag">
+        <span style="font-size: 0.8em;" aria-hidden="true">Lastschrift Ursprungsbetrag:</span>
+        <br>
+        <span *ngIf="!accountingEntry.lastschriftUrsprungsbetrag">-</span>
+        <span *ngIf="accountingEntry.lastschriftUrsprungsbetrag"
+            aria-hidden="true">{{accountingEntry.lastschriftUrsprungsbetrag}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Auslagenersatz Rücklastschrift: ' + accountingEntry.auslagenersatzRuecklastschrift">
+        <span style="font-size: 0.8em;" aria-hidden="true">Auslagenersatz Rücklastschrift:</span>
+        <br>
+        <span *ngIf="!accountingEntry.auslagenersatzRuecklastschrift">-</span>
+        <span *ngIf="accountingEntry.auslagenersatzRuecklastschrift"
+            aria-hidden="true">{{accountingEntry.auslagenersatzRuecklastschrift}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Begünstigter: ' + accountingEntry.beguenstigter">
+        <span style="font-size: 0.8em;" aria-hidden="true">Begünstigter:</span>
+        <br>
+        <span *ngIf="!accountingEntry.beguenstigter">-</span>
+        <span *ngIf="accountingEntry.beguenstigter" aria-hidden="true">{{accountingEntry.beguenstigter}}</span>
+    </p>
+
+    <p [attr.aria-label]="'I B A N: ' + accountingEntry.iban">
+        <span style="font-size: 0.8em;" aria-hidden="true">I B A N:</span>
+        <br>
+        <span *ngIf="!accountingEntry.iban">-</span>
+        <span *ngIf="accountingEntry.iban" aria-hidden="true">{{accountingEntry.iban}}</span>
+    </p>
+
+    <p [attr.aria-label]="'BIC: ' + accountingEntry.bic">
+        <span style="font-size: 0.8em;" aria-hidden="true">BIC:</span>
+        <br>
+        <span *ngIf="!accountingEntry.bic">-</span>
+        <span *ngIf="accountingEntry.bic" aria-hidden="true">{{accountingEntry.bic}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Betrag: ' + accountingEntry.betrag">
+        <span style="font-size: 0.8em;" aria-hidden="true">Betrag:</span>
+        <br>
+        <span *ngIf="!accountingEntry.betrag">-</span>
+        <span *ngIf="accountingEntry.betrag" aria-hidden="true">{{accountingEntry.betrag}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Währung: ' + accountingEntry.waehrung">
+        <span style="font-size: 0.8em;" aria-hidden="true">Währung:</span>
+        <br>
+        <span *ngIf="!accountingEntry.waehrung">-</span>
+        <span *ngIf="accountingEntry.waehrung" aria-hidden="true">{{accountingEntry.waehrung}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Info: ' + accountingEntry.info">
+        <span style="font-size: 0.8em;" aria-hidden="true">Info:</span>
+        <br>
+        <span *ngIf="!accountingEntry.info">-</span>
+        <span *ngIf="accountingEntry.info" aria-hidden="true">{{accountingEntry.info}}</span>
+    </p>
+</div>

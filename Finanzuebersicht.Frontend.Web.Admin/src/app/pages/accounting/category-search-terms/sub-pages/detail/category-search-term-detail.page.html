@@ -1,0 +1,39 @@
+<div class="loading" *ngIf="!categorySearchTerm">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<div class="category-search-term-detail-page" *ngIf="categorySearchTerm">
+    <div class="toolbar">
+        <h1>Suchbegriff: {{categorySearchTerm.term}} (Kategorie {{categorySearchTerm.category.title}})</h1>
+        <button mat-flat-button [routerLink]="['/accounting/category-search-terms']">
+            Schließen
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+            Ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+
+    <p>
+        <span style="font-size: 0.8em;">Kategorie:</span>
+        <br>
+        <span *ngIf="!categorySearchTerm.category">-</span>
+        <a *ngIf="categorySearchTerm.category"
+            [routerLink]="['/accounting/categories/detail', categorySearchTerm.category.id]">
+            {{categorySearchTerm.category.title}}
+            <mat-icon style="font-size: 1em;">open_in_new</mat-icon>
+        </a>
+    </p>
+
+
+    <p [attr.aria-label]="'Term: ' + categorySearchTerm.term">
+        <span style="font-size: 0.8em;" aria-hidden="true">Suchbegriff:</span>
+        <br>
+        <span *ngIf="!categorySearchTerm.term">-</span>
+        <span *ngIf="categorySearchTerm.term" aria-hidden="true">{{categorySearchTerm.term}}</span>
+    </p>
+</div>

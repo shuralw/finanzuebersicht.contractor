@@ -1,0 +1,34 @@
+<div class="loading" *ngIf="!startSaldo">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<div class="start-saldo-detail-page" *ngIf="startSaldo">
+    <div class="toolbar">
+        <h1>Start Saldo: {{startSaldo.bezeichnung}}</h1>
+        <button mat-flat-button [routerLink]="['/accounting/start-salden']">
+            Schließen
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+            Ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+
+    <p [attr.aria-label]="'Betrag: ' + startSaldo.betrag">
+        <span style="font-size: 0.8em;" aria-hidden="true">Betrag:</span>
+        <br>
+        <span *ngIf="!startSaldo.betrag">-</span>
+        <span *ngIf="startSaldo.betrag" aria-hidden="true">{{startSaldo.betrag}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Datum Am: ' + startSaldo.datumAm.toLocaleString()">
+        <span style="font-size: 0.8em;" aria-hidden="true">Datum Am:</span>
+        <br>
+        <span *ngIf="!startSaldo.datumAm">-</span>
+        <span *ngIf="startSaldo.datumAm" aria-hidden="true">{{startSaldo.datumAm | date:'dd. MMM. yyyy, HH:mm'}}</span>
+    </p>
+</div>

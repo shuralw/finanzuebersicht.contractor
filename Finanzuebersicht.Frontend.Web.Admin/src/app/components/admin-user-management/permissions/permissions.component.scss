@@ -1,0 +1,51 @@
+.categories {
+    position: relative;
+
+    .category {
+        border-bottom: 1px solid gainsboro;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        .title {
+            font-weight: bold;
+            margin: 6px 0;
+        }
+
+        .permissions {
+            .permission {
+                margin: 12px;
+
+                .permission-titel {
+                    display: inline-block;
+                    width: 250px;
+                }
+
+                .permission-value {
+                    display: inline-block;
+                    width: 250px;
+
+                    mat-select {
+                        padding: 6px;
+                        font-size: 16px;
+                        border: 1px solid #a9a9a9;
+
+                        &:focus {
+                            border: 2px solid #000000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .updating {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff8;
+    }
+}

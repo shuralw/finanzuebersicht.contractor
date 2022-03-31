@@ -1,0 +1,14 @@
+<div role="button" [attr.aria-label]="getAriaLabel()" class="file-upload" (click)="fileInput.click()"
+    (keyup.enter)="fileInput.click()" (keyup.space)="fileInput.click()" tabindex="0">
+    <div aria-hidden="true" class="placeholder" *ngIf="!file">Datei auswählen</div>
+    <div aria-hidden="true" class="placeholder with-value" *ngIf="file">{{fileName}}</div>
+    <input hidden tabindex="-1" (change)="fileSelected($event)" #fileInput type="file" [accept]="accept">
+    <button mat-icon-button tabindex="-1" aria-hidden="true">
+        <mat-icon>upload_file</mat-icon>
+    </button>
+    <div class="outline"></div>
+    <div aria-hidden="true" class="label">
+        <span>{{label}}</span>
+        <span *ngIf="required" class="required"> *</span>
+    </div>
+</div>

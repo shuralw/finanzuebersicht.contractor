@@ -1,0 +1,45 @@
+.accounting-entries-page {
+    height: 100%;
+
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content;
+        grid-template-rows: 50px min-content;
+
+        h1 {
+            display: block;
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        button {
+            height: min-content;
+        }
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "lineChart ";
+        margin: 36px 0;
+
+        .radio-buttons {
+            margin: auto 0;
+            grid-area: radioButtons;
+
+            .radio-group {
+                display: flex;
+                flex-direction: column;
+
+                .radio-button {
+                    margin: 6px 0;
+                }
+            }
+        }
+
+        .salden-line-chart-container {
+            grid-area: lineChart;
+        }
+    }
+}

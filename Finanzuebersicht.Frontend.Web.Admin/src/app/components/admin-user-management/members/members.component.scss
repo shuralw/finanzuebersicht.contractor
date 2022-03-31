@@ -1,0 +1,168 @@
+.members-component {
+    padding-top: 8px;
+    height: calc(100% - 8px);
+
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content;
+        grid-template-rows: 50px min-content;
+
+        h1 {
+            display: block;
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        button {
+            height: min-content;
+        }
+    }
+
+    .table-container {
+        height: calc(100% - 100px);
+        overflow: auto;
+
+        table {
+            width: 100%;
+        }
+
+        .mat-row {
+            transition: background-color 0.1s ease-in-out;
+
+            &:hover {
+                background-color: #ebebeb;
+            }
+        }
+
+        .name-container {
+            display: grid;
+
+            grid-template-columns: min-content auto;
+            gap: 12px;
+            align-items: center;
+
+            .row-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                overflow: hidden;
+                background-color: var(--bg-color);
+
+                img {
+                    margin: 8px;
+                    max-width: 20px;
+                    max-height: 20px;
+
+                    &.row-icon-bigger {
+                        margin: 5px;
+                        max-width: 26px;
+                        max-height: 26px;
+                    }
+                }
+            }
+        }
+
+        .notFound {
+            height: calc(100% - 50px);
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+
+            img {
+                height: 100px;
+            }
+        }
+    }
+}
+
+@import "src/colors.scss";
+
+.toolbar {
+    margin: 6px 0;
+    display: grid;
+    grid-template-columns: auto min-content;
+
+    .title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .add-button {
+        color: white;
+        background-color: $primary-color;
+        width: min-content;
+        padding: 8px 10px 10px 10px;
+        border-radius: 4px;
+        line-height: 16px;
+        font-size: 16px;
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover {
+            background-color: $primary-color-darker;
+        }
+    }
+}
+
+.adminUserGroups {
+    .notFound {
+        height: calc(100% - 50px);
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+
+        img {
+            height: 100px;
+        }
+    }
+}
+
+.memberAdd-container {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: "." "." "save";
+    grid-template-rows: 80px auto 30px;
+    grid-template-columns: auto;
+
+    .title-item {
+        font-size: 16px;
+        line-height: 30px;
+    }
+
+    input {
+        width: calc(100% - 8px);
+        height: 30px;
+        outline: none;
+        font-size: 16px;
+        padding: 0 4px;
+    }
+
+    .save-button-item {
+        grid-area: save;
+        justify-self: right;
+
+        .save-button {
+            color: white;
+            background-color: $primary-color;
+            border-radius: 4px;
+            white-space: nowrap;
+            width: min-content;
+            padding: 6px 12px;
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                background-color: $primary-color-darker;
+            }
+
+            &.disabled {
+                background-color: $primary-color-3;
+                cursor: auto;
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<mat-dialog-content>
+    <h2 *ngIf="!isUpdating">Gruppe erstellen</h2>
+    <h2 *ngIf="isUpdating">Gruppe ändern</h2>
+
+    <form [formGroup]="formGroup">
+        <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Name der Gruppe</mat-label>
+            <input matInput required="true" maxlength="256" placeholder="Name der Gruppe" formControlName="name">
+            <mat-hint [align]="'end'">{{formGroup.controls.name.value.length}} / 256</mat-hint>
+            <mat-error *ngIf="formGroup.controls.name.touched && formGroup.controls.name.invalid">
+                <span *ngIf="formGroup.controls.name.errors.required">Dieses Feld ist erforderlich.</span>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions [attr.align]="'center'">
+    <button mat-raised-button color="primary" (click)="onConfirmClick()">
+        <span *ngIf="!isUpdating">Erstellen</span>
+        <span *ngIf="isUpdating">Ändern</span>
+    </button>
+    <button mat-button mat-dialog-close>
+        Abbrechen
+    </button>
+</mat-dialog-actions>

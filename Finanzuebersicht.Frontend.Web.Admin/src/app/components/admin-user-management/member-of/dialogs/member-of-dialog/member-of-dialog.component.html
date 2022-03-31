@@ -1,0 +1,17 @@
+<mat-dialog-content>
+    <h2>Zu Gruppe hinzufügen</h2>
+
+    <form [formGroup]="formGroup">
+        <search-dropdown [formGroupInstance]="formGroup" [formControlNameInstance]="'adminUserGroupId'"
+            label="Gruppe" idExpr="id" displayExpr="name" required="true" [dataSource]="adminUserGroupsDataSource">
+        </search-dropdown>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions [attr.align]="'center'">
+    <button mat-raised-button color="primary" (click)="onConfirmClick()">
+        Hinzufügen
+    </button>
+    <button mat-button mat-dialog-close>
+        Abbrechen
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,43 @@
+<mat-dialog-content>
+    <h2>Mitglied hinzufügen</h2>
+
+    <form [formGroup]="formGroup">
+
+        <mat-form-field appearance="outline" [formGroup]="formGroup">
+            <mat-label>Element-Art</mat-label>
+            <mat-select disableOptionCentering panelClass="searchDropdownPanel" [formControlName]="'userType'">
+                <mat-option *ngFor="let elementType of elementTypes; let i = index" [value]="i">
+                    {{elementTypes[i]}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.controls.userType.touched && formGroup.controls.userType.invalid">
+                <span *ngIf="formGroup.controls.userType.errors.required">Dieses Feld ist erforderlich.</span>
+            </mat-error>
+        </mat-form-field>
+
+        <search-dropdown *ngIf="formGroup.controls.userType.value == 0" [formGroupInstance]="formGroup"
+            formControlNameInstance="memberId" label="E-Mail Benutzer" [dataSource]="adminEmailUsersDataSource" idExpr="id"
+            displayExpr="email">
+        </search-dropdown>
+        <search-dropdown *ngIf="formGroup.controls.userType.value == 1" [formGroupInstance]="formGroup"
+            formControlNameInstance="memberId" label="Gruppe" required="true" [dataSource]="adminUserGroupsDataSource"
+            idExpr="id" displayExpr="name">
+        </search-dropdown>
+        <search-dropdown *ngIf="formGroup.controls.userType.value == 2" [formGroupInstance]="formGroup"
+            formControlNameInstance="memberId" label="AD-Benutzer" [dataSource]="adminAdUsersDataSource" idExpr="id"
+            displayExpr="dn">
+        </search-dropdown>
+        <search-dropdown *ngIf="formGroup.controls.userType.value == 3" [formGroupInstance]="formGroup"
+            formControlNameInstance="memberId" label="AD-Gruppe" [dataSource]="adminAdGroupsDataSource" idExpr="id"
+            displayExpr="dn">
+        </search-dropdown>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions [attr.align]="'center'">
+    <button mat-raised-button color="primary" (click)="onConfirmClick()">
+        Hinzufügen
+    </button>
+    <button mat-button mat-dialog-close>
+        Abbrechen
+    </button>
+</mat-dialog-actions>

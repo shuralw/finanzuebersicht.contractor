@@ -1,0 +1,25 @@
+<mat-dialog-content>
+    <h2 *ngIf="!isUpdating">AD-Gruppe erstellen</h2>
+    <h2 *ngIf="isUpdating">Distinguished Name ändern</h2>
+
+    <form [formGroup]="formGroup">
+        <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Distinguished Name</mat-label>
+            <input matInput required="true" maxlength="256" placeholder="Distinguished Name" formControlName="dn">
+            <mat-hint [align]="'end'">{{formGroup.controls.dn.value.length}} / 256</mat-hint>
+            <mat-error *ngIf="formGroup.controls.dn.touched && formGroup.controls.dn.invalid">
+                <span *ngIf="formGroup.controls.dn.errors.required">Dieses Feld ist erforderlich.</span>
+                <span *ngIf="formGroup.controls.dn.errors.pattern">Der Distinguished Name ist ungültig.</span>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions [attr.align]="'center'">
+    <button mat-raised-button color="primary" (click)="onConfirmClick()">
+        <span *ngIf="!isUpdating">Erstellen</span>
+        <span *ngIf="isUpdating">Ändern</span>
+    </button>
+    <button mat-button mat-dialog-close>
+        Abbrechen
+    </button>
+</mat-dialog-actions>

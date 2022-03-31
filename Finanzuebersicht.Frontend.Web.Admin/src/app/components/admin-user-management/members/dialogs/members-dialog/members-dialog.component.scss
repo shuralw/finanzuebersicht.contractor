@@ -1,0 +1,12 @@
+h2 {
+    margin-top: 0;
+}
+
+mat-form-field {
+    min-width: 300px;
+    width: 100%;
+
+    ::ng-deep .mat-select-value {
+        width: 100%;
+    }
+}

@@ -1,0 +1,20 @@
+.berechtigung {
+    text-align: left;
+    background-color: transparent;
+    width: 210px;
+}
+
+.status {
+    width: 23px;
+    height: 23px;
+
+    background-color: gray;
+
+    &.green {
+        background-color: green;
+    }
+
+    &.red {
+        background-color: red;
+    }
+}

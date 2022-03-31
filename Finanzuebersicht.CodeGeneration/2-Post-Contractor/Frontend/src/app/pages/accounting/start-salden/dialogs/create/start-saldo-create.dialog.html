@@ -1,0 +1,56 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Start Saldo erstellen
+    </h1>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="start-saldo-create-dialog" *ngIf="startSaldoCreateForm">
+        <form [formGroup]="startSaldoCreateForm">
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Betrag</mat-label>
+                <input matInput formControlName="betrag" type="number" required="true" placeholder="Betrag">
+                <mat-error *ngIf="startSaldoCreateForm.controls.betrag.touched && startSaldoCreateForm.controls.betrag.invalid">
+                    <span *ngIf="startSaldoCreateForm.controls.betrag.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="startSaldoCreateForm.controls.betrag.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Datum Am</mat-label>
+                <input matInput formControlName="datumAm" required="true" placeholder="Datum Am" [matDatepicker]="pickerDatumAm">
+                <mat-datepicker-toggle matSuffix [for]="pickerDatumAm"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDatumAm></mat-datepicker>
+                <mat-error *ngIf="startSaldoCreateForm.controls.datumAm.touched && startSaldoCreateForm.controls.datumAm.invalid">
+                    <span *ngIf="startSaldoCreateForm.controls.datumAm.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="startSaldoCreateForm.controls.datumAm.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onCreateClicked()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Erstellen
+        </button>
+
+        <button mat-flat-button mat-dialog-close>
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

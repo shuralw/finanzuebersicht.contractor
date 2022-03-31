@@ -1,0 +1,28 @@
+trigger: none
+
+jobs:
+- job: FinanzuebersichtFrontendWebAdmin
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      command: 'install'
+      workingDir: 'Finanzuebersicht.Frontends/Finanzuebersicht.Frontend.Web.Admin'
+  - task: Npm@1
+    displayName: npm run lint
+    inputs:
+      command: 'custom'
+      customCommand: 'run lint'
+      workingDir: 'Finanzuebersicht.Frontends/Finanzuebersicht.Frontend.Web.Admin'
+  - task: Npm@1
+    displayName: npm run build:prod
+    inputs:
+      command: 'custom'
+      customCommand: 'run build:prod'
+      workingDir: 'Finanzuebersicht.Frontends/Finanzuebersicht.Frontend.Web.Admin'

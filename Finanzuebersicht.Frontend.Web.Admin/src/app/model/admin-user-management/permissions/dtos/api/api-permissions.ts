@@ -1,0 +1,33 @@
+export interface ApiPermissions {
+    Benutzerverwaltung: number;
+    BerichteBearbeiten: number;
+    BerichteLesen: number;
+    BetriebBearbeiten: number;
+    BetriebLesen: number;
+    DokumenteBearbeiten: number;
+    DokumenteLesen: number;
+    GebietskoerperschaftBearbeiten: number;
+    GebietskoerperschaftLesen: number;
+    GrundDatenBearbeiten: number;
+    GrundDatenLesen: number;
+    HilfetextBearbeiten: number;
+    HilfetextLesen: number;
+    ImportExportSchemataBearbeiten: number;
+    ImportExportSchemataLesen: number;
+    LoginAlsBetrieb: number;
+    LoginAlsGebietskoerperschaft: number;
+    LoginAlsSchule: number;
+    LoginAlsSchulkind: number;
+    NachrichtenBearbeiten: number;
+    NachrichtenLesen: number;
+    NewsletterBearbeiten: number;
+    NewsletterLesen: number;
+    SchuleBearbeiten: number;
+    SchuleLesen: number;
+    SchulkindBearbeiten: number;
+    SchulkindLesen: number;
+    SchulsystemBearbeiten: number;
+    SchulsystemLesen: number;
+    StatistikenBearbeiten: number;
+    StatistikenLesen: number;
+}

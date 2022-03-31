@@ -1,0 +1,53 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Suchbegriff ändern
+    </h1>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="loading" *ngIf="!categorySearchTermUpdateForm">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+    </div>
+    <div class="category-search-term-update-dialog" *ngIf="categorySearchTermUpdateForm">
+        <form [formGroup]="categorySearchTermUpdateForm">
+            <search-dropdown [formGroupInstance]="categorySearchTermUpdateForm"
+                [formControlNameInstance]="'categoryId'" label="Kategorie" idExpr="id" displayExpr="title"
+                required="true" [dataSource]="categoryDataSource" [initialItem]="selectedCategory">
+            </search-dropdown>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Suchbegriff</mat-label>
+                <input matInput formControlName="term" required="true" maxlength="100" placeholder="z.B. Shell Tank AG">
+                <mat-hint *ngIf="categorySearchTermUpdateForm.controls.term.value" [align]="'end'">
+                    {{categorySearchTermUpdateForm.controls.term.value.length}} / 100
+                </mat-hint>
+                <mat-error *ngIf="categorySearchTermUpdateForm.controls.term.touched && categorySearchTermUpdateForm.controls.term.invalid">
+                    <span *ngIf="categorySearchTermUpdateForm.controls.term.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="categorySearchTermUpdateForm.controls.term.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onUpdateClicked()" [disabled]="!categorySearchTermUpdateForm"
+            [attr.aria-disabled]="!categorySearchTermUpdateForm">
+            <mat-icon class="mat-icon-button-fix">save</mat-icon>
+            Speichern
+        </button>
+
+        <button mat-flat-button [mat-dialog-close]="false">
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

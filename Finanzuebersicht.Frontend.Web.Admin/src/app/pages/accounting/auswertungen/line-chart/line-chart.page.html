@@ -1,0 +1,17 @@
+<div class="accounting-entries-page">
+    <div class="grid-container">
+        <div class="salden-line-chart-container">
+            <dx-chart [dataSource]="saldenDataSource" style="margin: 0px 20px;">
+                <dxi-series argumentField="buchungsdatum" valueField="summe"></dxi-series>
+                <dxo-options height="800"></dxo-options>
+                <dxo-common-series-settings type="spline"></dxo-common-series-settings>
+                <dxo-argument-axis argumentType="datetime">
+                    <dxo-label format="dd.MM.yyyy"></dxo-label>
+                </dxo-argument-axis>
+                <dxo-legend [visible]="false"></dxo-legend>
+                <dxo-zoom-and-pan argumentAxis="both" [dragToZoom]="true">
+                </dxo-zoom-and-pan>
+            </dx-chart>
+        </div>
+    </div>
+</div>

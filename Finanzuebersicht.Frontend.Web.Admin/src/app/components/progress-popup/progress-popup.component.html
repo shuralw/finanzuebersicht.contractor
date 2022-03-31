@@ -1,0 +1,7 @@
+<dx-popup class="popup" [width]="348" [height]="'auto'" [showTitle]="true" [title]="title"
+  [showCloseButton]="false" [dragEnabled]="false" [(visible)]="popupVisible" #popup>
+  <div *dxTemplate="let data of 'content'">
+    <dx-progress-bar [min]="0" [max]="progressMax" [statusFormat]="format" [value]="progress">
+    </dx-progress-bar>
+  </div>
+</dx-popup>

@@ -1,0 +1,40 @@
+.loader {
+	width: var(--widthall);
+	height: var(--widthall);
+	border-radius: var(--widthall);
+	position: relative;
+	animation: rotate 0.8s steps(12, end) infinite;
+
+	.prong {
+		position: absolute;
+		height: 50%;
+		width: var(--widthprong);
+		left: calc(50% - var(--widthprong) / 2);
+		transform-origin: bottom;
+
+		.inner {
+			background: #003671;
+			border-radius: 12px;
+			position: absolute;
+			width: 100%;
+			top: 0;
+			height: 50%;
+		}
+
+		@for $i from 1 through 12 {
+			&:nth-of-type(#{$i}) {
+				opacity: $i * 0.08;
+				transform: rotate($i * 30deg);
+			}
+		}
+	}
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

@@ -1,0 +1,8 @@
+<dx-pie-chart *ngIf="pieDataSource" id="pie" palette="bright" [dataSource]="pieDataSource"
+  (onPointClick)="pointClickHandler($event)" (onLegendClick)="legendClickHandler($event)">
+  <dxi-series [argumentField]="argumentField" [valueField]="valueField">
+    <dxo-label [visible]="true">
+      <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+    </dxo-label>
+  </dxi-series>
+</dx-pie-chart>

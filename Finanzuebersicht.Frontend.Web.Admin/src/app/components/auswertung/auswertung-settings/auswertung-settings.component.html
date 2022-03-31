@@ -1,0 +1,23 @@
+<div class="settingsbox">
+  <h2 (click)="collapsed = !collapsed">Einstellungen
+    <fa-icon *ngIf="collapsed" style="float: right;" [icon]="faChevronDown" size="1x" class="icon"></fa-icon>
+    <fa-icon *ngIf="!collapsed" style="float: right;" [icon]="faChevronUp" size="1x" class="icon"></fa-icon>
+  </h2>
+  <div *ngIf="!collapsed">
+    <dx-form class="container" [(formData)]="settings" showColonAfterLabel="true" labelLocation="left"
+      maxColWidth="150" colCount="2" style="margin: 6px 0px">
+      <dxi-item dataField="MinDate" label="Von" editorType="dxDateBox" [editorOptions]="{ width: '100%' }"></dxi-item>
+      <dxi-item dataField="MaxDate" caption="Bis" editorType="dxDateBox" [editorOptions]="{ width: '100%' }"></dxi-item>
+    </dx-form>
+    <div class="button-line">
+      <dx-button class="button-dates" text="Last week" (onClick)="lastWeek()"></dx-button>
+      <dx-button class="button-dates" text="Last month" (onClick)="lastMonth()"></dx-button>
+      <dx-button class="button-dates" text="Last year" (onClick)="lastYear()"></dx-button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <dx-button class="button-dates" text="This month so far" (onClick)="thisMonth()"></dx-button>
+      <dx-button class="button-dates" text="This year so far" (onClick)="thisYear()"></dx-button>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <dx-button class="button-dates" type="success" text="Update" (onClick)="triggerUpdate()"></dx-button>
+    </div>
+  </div>
+</div>

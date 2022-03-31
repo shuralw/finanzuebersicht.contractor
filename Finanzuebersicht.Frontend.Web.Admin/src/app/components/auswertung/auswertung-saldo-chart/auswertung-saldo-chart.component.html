@@ -1,0 +1,16 @@
+<app-auswertung-settings [settings]="options" (update)="reload()"></app-auswertung-settings>
+<br>
+<dx-chart [dataSource]="chartData" style="margin: 0px 20px;">
+    <dxi-series argumentField="date" valueField="saldo"></dxi-series>
+    <dxo-common-series-settings type="spline"></dxo-common-series-settings>
+    <dxo-argument-axis argumentType="datetime">
+        <dxo-label format="dd.MM.yyyy"></dxo-label>
+    </dxo-argument-axis>
+    <dxi-value-axis *ngIf="buffer">
+        <dxi-constant-line [value]="buffer" color="red" width="2"></dxi-constant-line>
+        <dxo-label format="currency"></dxo-label>
+    </dxi-value-axis>
+    <dxo-legend [visible]="false"></dxo-legend>
+    <dxo-zoom-and-pan argumentAxis="both" [dragToZoom]="true">
+    </dxo-zoom-and-pan>
+</dx-chart>

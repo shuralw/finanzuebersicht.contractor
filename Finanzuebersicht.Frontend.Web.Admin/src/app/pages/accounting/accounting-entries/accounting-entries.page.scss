@@ -1,0 +1,66 @@
+.accounting-entries-page {
+    height: 100%;
+
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content min-content;
+        grid-template-rows: 50px min-content;
+        grid-column-gap: 18px;
+
+        h1 {
+            display: block;
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        button {
+            height: min-content;
+        }
+    }
+
+    .table-container {
+        height: calc(100% - 100px);
+        overflow: auto;
+
+        table {
+            width: 100%;
+
+            .align-celltext-right {
+                text-align: right;
+                padding-right: 12px;
+            }
+        }
+
+        .mat-row {
+            transition: background-color 0.1s ease-in-out;
+
+            &:hover {
+                background-color: #ebebeb;
+            }
+        }
+
+        .loading {
+            width: var(--content-width);
+            display: grid;
+            justify-content: center;
+            margin: 16px 0;
+        }
+    }
+
+    .expansionPanel {
+        margin: 18px 0;
+
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: space-between;
+            align-items: stretch;
+        }
+
+        mat-checkbox {
+            margin: 6px 0;
+            width: 220px;
+        }
+    }
+}

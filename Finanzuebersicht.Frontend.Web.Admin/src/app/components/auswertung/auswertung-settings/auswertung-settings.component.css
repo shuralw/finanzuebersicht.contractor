@@ -1,0 +1,20 @@
+.settingsbox {
+    margin: 6px;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid gainsboro;
+}
+
+.settingsbox h2 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.button-line {
+    text-align: center;
+    margin: 6px;
+}
+
+.button-dates {
+    margin: 0px 6px;
+}

@@ -1,0 +1,14 @@
+<div *ngFor="let category of permissionsCategories">
+    <div *ngIf="!category.hidden || category == null">
+        <b>{{category.name}}</b>
+        <table>
+            <tr *ngFor="let permission of category.permissions">
+                <td class="berechtigung">{{permission.name}}:</td>
+                <td>
+                    <div class="status" [class.green]="permission.value == 1" [class.red]="permission.value == 2"></div>
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div>
+</div>

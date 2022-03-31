@@ -1,0 +1,17 @@
+{
+  "BackendDestinationFolder": ".\\Backend",
+  "DbDestinationFolder": ".\\Database",
+  "FrontendDestinationFolder": ".\\Frontend",
+  "ProjectName": "Finanzuebersicht.Backend.Generated",
+  "DbProjectName": "Finanzuebersicht.Database.Core",
+  "Replacements": {
+    "app-search-dropdown": "search-dropdown",
+    "app-table-filter-bar": "table-filter-bar",
+    "src/app/components/ui/dropdown-data-source/dropdown-pagination-data-source": "@krz/material",
+    "src/app/components/ui/search-dropdown/search-dropdown.module": "@krz/material",
+    "src/app/components/ui/table-filter-bar/table-filter-bar.module": "@krz/material",
+    "src/app/services/backend/pagination/i-paged-result": "@krz/material",
+    "src/app/services/backend/pagination/i-pagination-options": "@krz/material",
+    "src/app/services/backend/pagination/pagination.data-source": "@krz/material"
+  }
+}

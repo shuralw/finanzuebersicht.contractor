@@ -1,0 +1,27 @@
+<div class="accounting-entries-page">
+    <div class="grid-container">
+        <div class="radio-buttons">
+            <mat-radio-group class="radio-group" [(ngModel)]="valuesShown">
+                <mat-radio-button class="radio-button" *ngFor="let showValue of availableShownValues"
+                    [value]="showValue" (click)="filterCategories()">
+                    Zeige {{showValue}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="pie-chart-container">
+            <dx-pie-chart *ngIf="categoriesDataSource" id="pie" palette="bright" [dataSource]="categoriesDataSource"
+                resolveLabelOverlapping="shift" [customizePoint]="customizeColor"
+                (onPointClick)="pointClickHandler($event)" (onLegendClick)="legendClickHandler($event)">
+                <dxo-size [height]="500" [width]="800">
+                </dxo-size>
+                <dxo-legend [title]="'Kategorien'"></dxo-legend>
+                <dxi-series argumentField="title" valueField="summe">
+                    <dxo-label [visible]="true">
+                        <dxo-connector [visible]="true" [width]="1"></dxo-connector>
+                    </dxo-label>
+                </dxi-series>
+            </dx-pie-chart>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+.accounting-entries-page {
+    height: 100%;
+
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content;
+        grid-template-rows: 50px min-content;
+
+        h1 {
+            display: block;
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        button {
+            height: min-content;
+        }
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: min-content min-content auto;
+        grid-template-rows: 400px auto;
+        grid-template-areas:
+            "radioButtons pieChart ."
+            "lineChart lineChart lineChart";
+        margin: 18px;
+
+        .radio-buttons {
+            margin: auto 0;
+            grid-area: radioButtons;
+
+            .radio-group {
+                display: flex;
+                flex-direction: column;
+
+                .radio-button {
+                    margin: 6px 0;
+                }
+            }
+        }
+
+        .pie-chart-container {
+            grid-area: pieChart;
+        }
+
+        .salden-line-chart-container {
+            grid-area: lineChart;
+        }
+
+        ::ng-deep #pie {
+            height: 240px;
+        }
+
+        ::ng-deep #pie * {
+            margin: 0 auto;
+        }
+    }
+}

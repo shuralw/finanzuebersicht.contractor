@@ -1,0 +1,31 @@
+td {
+    background-color: gray;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 30% 30% 40%;
+
+    .header {
+        grid-area: header;
+    }
+
+    .ausgaben-donut {
+        grid-area: ausgaben-donut;
+    }
+
+    .balance {
+        grid-area: balance;
+    }
+
+    .bar-chart {
+        grid-area: bar-chart;
+    }
+
+    .line-chart {
+        grid-area: line-chart;
+    }
+
+    .recent-activity {
+        grid-area: recent-activity;
+    }
+}

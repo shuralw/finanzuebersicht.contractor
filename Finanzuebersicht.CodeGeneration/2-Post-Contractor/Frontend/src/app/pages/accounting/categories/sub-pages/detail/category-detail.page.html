@@ -1,0 +1,125 @@
+<div class="loading" *ngIf="!category">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<div class="category-detail-page" *ngIf="category">
+    <div class="toolbar">
+        <h1>Category: {{category.bezeichnung}}</h1>
+        <button mat-flat-button [routerLink]="['/accounting/categories']">
+            Schließen
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+            Ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Stammdaten">
+        </div>
+
+    <p>
+        <span style="font-size: 0.8em;">Super Category:</span>
+        <br>
+        <span *ngIf="!category.superCategory">-</span>
+        <a *ngIf="category.superCategory"
+            [routerLink]="['/accounting/categories/detail', category.superCategory.id]">
+            {{category.superCategory.bezeichnung}}
+            <mat-icon style="font-size: 1em;">open_in_new</mat-icon>
+        </a>
+    </p>
+
+
+    <p [attr.aria-label]="'Title: ' + category.title">
+        <span style="font-size: 0.8em;" aria-hidden="true">Title:</span>
+        <br>
+        <span *ngIf="!category.title">-</span>
+        <span *ngIf="category.title" aria-hidden="true">{{category.title}}</span>
+    </p>
+
+    <p [attr.aria-label]="'Color: ' + category.color">
+        <span style="font-size: 0.8em;" aria-hidden="true">Color:</span>
+        <br>
+        <span *ngIf="!category.color">-</span>
+        <span *ngIf="category.color" aria-hidden="true">{{category.color}}</span>
+    </p>
+        </mat-tab>
+        <mat-tab label="Accounting Entries">
+            <h2>Accounting Entries</h2>
+            <div class="table-container">
+                <table mat-table [dataSource]="accountingEntriesTableDataSource">
+
+                    <ng-container matColumnDef="bezeichnung">
+                        <th mat-header-cell *matHeaderCellDef> Bezeichnung </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.bezeichnung}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detail">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" width="10%">
+                            <button mat-button role="link">Detail</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="accountingEntriesGridColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: accountingEntriesGridColumns;"
+                        [routerLink]="['/accounting/accounting-entries/detail', row.id]"></tr>
+                </table>
+            </div>
+        </mat-tab>
+        <mat-tab label="Child Categories">
+            <h2>Child Categories</h2>
+            <div class="table-container">
+                <table mat-table [dataSource]="childCategoriesTableDataSource">
+
+                    <ng-container matColumnDef="bezeichnung">
+                        <th mat-header-cell *matHeaderCellDef> Bezeichnung </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.bezeichnung}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detail">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" width="10%">
+                            <button mat-button role="link">Detail</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="childCategoriesGridColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: childCategoriesGridColumns;"
+                        [routerLink]="['/accounting/categories/detail', row.id]"></tr>
+                </table>
+            </div>
+        </mat-tab>
+        <mat-tab label="Category Search Terms">
+            <h2>Category Search Terms</h2>
+            <div class="table-container">
+                <table mat-table [dataSource]="categorySearchTermsTableDataSource">
+
+                    <ng-container matColumnDef="bezeichnung">
+                        <th mat-header-cell *matHeaderCellDef> Bezeichnung </th>
+                        <td mat-cell *matCellDef="let element">
+                            {{element.bezeichnung}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="detail">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let element" width="10%">
+                            <button mat-button role="link">Detail</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="categorySearchTermsGridColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: categorySearchTermsGridColumns;"
+                        [routerLink]="['/accounting/category-search-terms/detail', row.id]"></tr>
+                </table>
+            </div>
+        </mat-tab>
+    </mat-tab-group>

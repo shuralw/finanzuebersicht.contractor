@@ -1,0 +1,50 @@
+<div class="loading" *ngIf="!category">
+    <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<div class="category-detail-page" *ngIf="category">
+    <div class="toolbar">
+        <h1>Kategorie: {{category.title}}</h1>
+        <button mat-flat-button [routerLink]="['/accounting/categories']">
+            Schließen
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">edit</mat-icon>
+            Ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+    <mat-tab-group mat-align-tabs="start">
+        <mat-tab label="Stammdaten">
+
+            <p>
+                <span style="font-size: 0.8em;">Übergeordnete Kategorie:</span>
+                <br>
+                <span *ngIf="!category.superCategory">-</span>
+                <a *ngIf="category.superCategory"
+                    [routerLink]="['/accounting/categories/detail', category.superCategory.id]">
+                    {{category.superCategory.title}}
+                    <mat-icon style="font-size: 1em;">open_in_new</mat-icon>
+                </a>
+            </p>
+
+
+            <p [attr.aria-label]="'Title: ' + category.title">
+                <span style="font-size: 0.8em;" aria-hidden="true">Bezeichnung:</span>
+                <br>
+                <span *ngIf="!category.title">-</span>
+                <span *ngIf="category.title" aria-hidden="true">{{category.title}}</span>
+            </p>
+
+            <p [attr.aria-label]="'Color: ' + category.color">
+                <span style="font-size: 0.8em;" aria-hidden="true">Farbe:</span>
+                <br>
+                <span *ngIf="!category.color">-</span>
+                <span *ngIf="category.color" aria-hidden="true">{{category.color}}</span>
+            </p>
+        </mat-tab>
+    </mat-tab-group>
+</div>

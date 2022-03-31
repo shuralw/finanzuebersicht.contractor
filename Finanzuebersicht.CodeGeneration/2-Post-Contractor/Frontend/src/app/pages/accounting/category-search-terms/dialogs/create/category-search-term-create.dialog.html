@@ -1,0 +1,45 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Category Search Term erstellen
+    </h1>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="category-search-term-create-dialog" *ngIf="categorySearchTermCreateForm">
+        <form [formGroup]="categorySearchTermCreateForm">
+
+            <search-dropdown [formGroupInstance]="categorySearchTermCreateForm" [formControlNameInstance]="'categoryId'"
+                label="Category" idExpr="id" displayExpr="bezeichnung" required="true" [dataSource]="categoryDataSource"></search-dropdown>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Term</mat-label>
+                <input matInput formControlName="term" required="true" maxlength="100" placeholder="Term">
+                <mat-hint [align]="'end'">{{categorySearchTermCreateForm.controls.term.value.length}} / 100</mat-hint>
+                <mat-error *ngIf="categorySearchTermCreateForm.controls.term.touched && categorySearchTermCreateForm.controls.term.invalid">
+                    <span *ngIf="categorySearchTermCreateForm.controls.term.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="categorySearchTermCreateForm.controls.term.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onCreateClicked()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Erstellen
+        </button>
+
+        <button mat-flat-button mat-dialog-close>
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

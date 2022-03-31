@@ -1,0 +1,24 @@
+<div class="categories">
+    <div *ngFor="let category of permissions">
+        <div class="category" *ngIf="!category.hidden || category == null">
+            <div class="title">{{category.name}}</div>
+            <div class="permissions">
+                <div class="permission" *ngFor="let permission of category.permissions">
+                    <label [attr.id]="permission.name + '-label'" class="permission-titel">{{permission.name}}</label>
+                    <div class="permission-value">
+                        <mat-select disableOptionCentering [disabled]="isUpdating" panelClass="searchDropdownPanel"
+                            [(value)]="permission.value" (valueChange)="onPermissionsDropdownValueChanged()"
+                            [attr.aria-labelledBy]="permission.name + '-label'">
+                            <mat-option *ngFor="let dataSourceItem of permissionStates" [value]="dataSourceItem.id">
+                                {{dataSourceItem.name}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isUpdating" class="updating center-item">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+    </div>
+</div>

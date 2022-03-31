@@ -1,0 +1,25 @@
+.admin-ad-group-detail-page {
+    .toolbar {
+        display: grid;
+        grid-template-columns: auto min-content min-content min-content;
+        grid-gap: 8px;
+        align-items: center;
+
+        h1 {
+            font-size: 1.2em;
+        }
+
+        .save-button {
+            height: min-content;
+        }
+    }
+
+    mat-tab-group {
+        max-width: var(--content-width);
+        height: calc(var(--content-height) - 52px);
+
+        ::ng-deep mat-tab-body {
+            height: calc(var(--content-height) - 100px);
+        }
+    }
+}

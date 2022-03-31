@@ -1,0 +1,291 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Buchung erstellen
+    </h1>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="accounting-entry-create-dialog" *ngIf="accountingEntryCreateForm">
+        <form [formGroup]="accountingEntryCreateForm">
+
+            <search-dropdown [formGroupInstance]="accountingEntryCreateForm" [formControlNameInstance]="'categoryId'"
+                label="Category" idExpr="id" displayExpr="title" [dataSource]="categoryDataSource">
+            </search-dropdown>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Auftragskonto</mat-label>
+                <input matInput formControlName="auftragskonto" required="true" maxlength="30"
+                    placeholder="Auftragskonto">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.auftragskonto.value.length}} / 30
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.auftragskonto.touched && accountingEntryCreateForm.controls.auftragskonto.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.auftragskonto.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.auftragskonto.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Buchungsdatum</mat-label>
+                <input matInput formControlName="buchungsdatum" placeholder="Buchungsdatum"
+                    [matDatepicker]="pickerBuchungsdatum">
+                <mat-datepicker-toggle matSuffix [for]="pickerBuchungsdatum"></mat-datepicker-toggle>
+                <mat-datepicker #pickerBuchungsdatum></mat-datepicker>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.buchungsdatum.touched && accountingEntryCreateForm.controls.buchungsdatum.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.buchungsdatum.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.buchungsdatum.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Valuta Datum</mat-label>
+                <input matInput formControlName="valutaDatum" placeholder="Valuta Datum"
+                    [matDatepicker]="pickerValutaDatum">
+                <mat-datepicker-toggle matSuffix [for]="pickerValutaDatum"></mat-datepicker-toggle>
+                <mat-datepicker #pickerValutaDatum></mat-datepicker>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.valutaDatum.touched && accountingEntryCreateForm.controls.valutaDatum.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.valutaDatum.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.valutaDatum.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Buchungstext</mat-label>
+                <input matInput formControlName="buchungstext" maxlength="300"
+                    placeholder="Buchungstext">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.buchungstext.value.length}} / 300
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.buchungstext.touched && accountingEntryCreateForm.controls.buchungstext.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.buchungstext.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.buchungstext.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Verwendungszweck</mat-label>
+                <input matInput formControlName="verwendungszweck" required="true" maxlength="300"
+                    placeholder="Verwendungszweck">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.verwendungszweck.value.length}} / 300
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.verwendungszweck.touched && accountingEntryCreateForm.controls.verwendungszweck.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.verwendungszweck.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.verwendungszweck.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Gläubiger Id</mat-label>
+                <input matInput formControlName="glaeubigerId" maxlength="100"
+                    placeholder="Gläubiger Id">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.glaeubigerId.value.length}} / 100
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.glaeubigerId.touched && accountingEntryCreateForm.controls.glaeubigerId.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.glaeubigerId.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.glaeubigerId.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Mandatsreferenz</mat-label>
+                <input matInput formControlName="mandatsreferenz" maxlength="100"
+                    placeholder="Mandatsreferenz">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.mandatsreferenz.value.length}} / 100
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.mandatsreferenz.touched && accountingEntryCreateForm.controls.mandatsreferenz.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.mandatsreferenz.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.mandatsreferenz.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Sammlerreferenz</mat-label>
+                <input matInput formControlName="sammlerreferenz" maxlength="100"
+                    placeholder="Sammlerreferenz">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.sammlerreferenz.value.length}} / 100
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.sammlerreferenz.touched && accountingEntryCreateForm.controls.sammlerreferenz.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.sammlerreferenz.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.sammlerreferenz.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Lastschrift Ursprungsbetrag</mat-label>
+                <input matInput formControlName="lastschriftUrsprungsbetrag" type="number"
+                    placeholder="Lastschrift Ursprungsbetrag">
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.lastschriftUrsprungsbetrag.touched && accountingEntryCreateForm.controls.lastschriftUrsprungsbetrag.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.lastschriftUrsprungsbetrag.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.lastschriftUrsprungsbetrag.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Auslagenersatz Rücklastschrift</mat-label>
+                <input matInput formControlName="auslagenersatzRuecklastschrift" maxlength="100"
+                    placeholder="Auslagenersatz Rücklastschrift">
+                <mat-hint [align]="'end'">
+                    {{accountingEntryCreateForm.controls.auslagenersatzRuecklastschrift.value.length}} / 100</mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.auslagenersatzRuecklastschrift.touched && accountingEntryCreateForm.controls.auslagenersatzRuecklastschrift.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.auslagenersatzRuecklastschrift.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.auslagenersatzRuecklastschrift.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Begünstigter</mat-label>
+                <input matInput formControlName="beguenstigter" required="true" maxlength="200"
+                    placeholder="Begünstigter">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.beguenstigter.value.length}} / 200
+                </mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.beguenstigter.touched && accountingEntryCreateForm.controls.beguenstigter.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.beguenstigter.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.beguenstigter.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>IBAN</mat-label>
+                <input matInput formControlName="iban" required="true" maxlength="40" placeholder="I B A N">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.iban.value.length}} / 40</mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.iban.touched && accountingEntryCreateForm.controls.iban.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.iban.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.iban.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>BIC</mat-label>
+                <input matInput formControlName="bic" required="true" maxlength="20" placeholder="BIC">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.bic.value.length}} / 20</mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.bic.touched && accountingEntryCreateForm.controls.bic.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.bic.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.bic.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Betrag</mat-label>
+                <input matInput formControlName="betrag" type="number" required="true" placeholder="Betrag">
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.betrag.touched && accountingEntryCreateForm.controls.betrag.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.betrag.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.betrag.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Währung</mat-label>
+                <input matInput formControlName="waehrung" required="true" maxlength="10" placeholder="Währung">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.waehrung.value.length}} / 10</mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.waehrung.touched && accountingEntryCreateForm.controls.waehrung.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.waehrung.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.waehrung.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Info</mat-label>
+                <input matInput formControlName="info" maxlength="100" placeholder="Info">
+                <mat-hint [align]="'end'">{{accountingEntryCreateForm.controls.info.value.length}} / 100</mat-hint>
+                <mat-error
+                    *ngIf="accountingEntryCreateForm.controls.info.touched && accountingEntryCreateForm.controls.info.invalid">
+                    <span *ngIf="accountingEntryCreateForm.controls.info.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="accountingEntryCreateForm.controls.info.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onCreateClicked()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Erstellen
+        </button>
+
+        <button mat-flat-button mat-dialog-close>
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

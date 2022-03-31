@@ -1,0 +1,232 @@
+<div class="accounting-entries-page">
+    <div class="toolbar">
+        <h1>Buchungen</h1>
+        <button mat-flat-button color="primary" (click)="openCreateDialog()">
+            <mat-icon class="mat-icon-button-fix">add</mat-icon>
+            Buchung erstellen
+        </button>
+        <button mat-flat-button color="primary" (click)="openCsvImportDialog()">
+            <mat-icon class="mat-icon-button-fix">save_alt</mat-icon>
+            CSV importieren
+        </button>
+    </div>
+
+    <div class="expansionPanel">
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Einzublendende Spalten
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="flex-container">
+                <mat-checkbox [(ngModel)]="categoryVisible" (click)="reloadVisibleColumns()">Feste Kategorie
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="auftragskontoVisible" (click)="reloadVisibleColumns()">Auftragskonto
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="buchungsdatumVisible" (click)="reloadVisibleColumns()">Buchungsdatum
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="valutaDatumVisible" (click)="reloadVisibleColumns()">ValutaDatum
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="verwendungszweckVisible" (click)="reloadVisibleColumns()">
+                    Verwendungszweck
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="glaeubigerIdVisible" (click)="reloadVisibleColumns()">GlaeubigerId
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="mandatsreferenzVisible" (click)="reloadVisibleColumns()">
+                    Mandatsreferenz
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="sammlerreferenzVisible" (click)="reloadVisibleColumns()">
+                    Sammlerreferenz
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="lastschriftUrsprungsbetragVisible" (click)="reloadVisibleColumns()">
+                    LastschriftUrsprungsbetrag
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="auslagenersatzRuecklastschriftVisible" (click)="reloadVisibleColumns()">
+                    AuslagenersatzRuecklastschrift
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="beguenstigterVisible" (click)="reloadVisibleColumns()">Begünstigter
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="ibanVisible" (click)="reloadVisibleColumns()">Iban</mat-checkbox>
+                <mat-checkbox [(ngModel)]="bicVisible" (click)="reloadVisibleColumns()">Bic</mat-checkbox>
+                <mat-checkbox [(ngModel)]="betragVisible" (click)="reloadVisibleColumns()">Betrag</mat-checkbox>
+                <mat-checkbox [(ngModel)]="buchungstextVisible" (click)="reloadVisibleColumns()">Buchungstext
+                </mat-checkbox>
+                <mat-checkbox [(ngModel)]="infoVisible" (click)="reloadVisibleColumns()">Info</mat-checkbox>
+            </div>
+        </mat-expansion-panel>
+    </div>
+
+    <table-filter-bar>
+        <!-- Left -->
+        <table-filter-bar-icon>search</table-filter-bar-icon>
+
+        <table-filter-bar-input placeholder="Suchen..." [(value)]="filterTerm"
+            (valueChange)="accountingEntriesDataSource.triggerUpdate()">
+        </table-filter-bar-input>
+
+        <!-- Right -->
+
+        <table-filter-bar-dropdown [floatingRight]="true" [dataSource]="categoryDataSource" idExpr="id"
+            displayExpr="title" label="Category" [(values)]="categorySelectedValues"
+            (valuesChange)="accountingEntriesDataSource.triggerUpdate()">
+        </table-filter-bar-dropdown>
+    </table-filter-bar>
+
+    <br>
+
+    <div class="table-container">
+        <table mat-table [dataSource]="accountingEntriesDataSource" matSort>
+
+            <ng-container *ngIf="categoryVisible" matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef> Feste Kategorie </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.category">{{element.category.title}}</span>
+                    <span *ngIf="!element.category">-</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="auftragskontoVisible" matColumnDef="auftragskonto">
+                <th mat-header-cell *matHeaderCellDef> Auftragskonto </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.auftragskonto">-</span>
+                    <span *ngIf="element.auftragskonto">{{element.auftragskonto}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="buchungsdatumVisible" matColumnDef="buchungsdatum">
+                <th mat-header-cell *matHeaderCellDef> Buchungsdatum </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.buchungsdatum">-</span>
+                    <span *ngIf="element.buchungsdatum">{{element.buchungsdatum | date:'dd. MMM. yyyy, HH:mm'}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="valutaDatumVisible" matColumnDef="valutaDatum">
+                <th mat-header-cell *matHeaderCellDef> Valuta Datum </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.valutaDatum">-</span>
+                    <span *ngIf="element.valutaDatum">{{element.valutaDatum | date:'dd. MMM. yyyy, HH:mm'}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="verwendungszweckVisible" matColumnDef="verwendungszweck">
+                <th mat-header-cell *matHeaderCellDef> Verwendungszweck </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.verwendungszweck">-</span>
+                    <span *ngIf="element.verwendungszweck"
+                        [title]="element.verwendungszweck">{{cutToStringLength(element.verwendungszweck,40)}}</span>
+                    <span *ngIf="element.verwendungszweck.length  > 40">...</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="glaeubigerIdVisible" matColumnDef="glaeubigerId">
+                <th mat-header-cell *matHeaderCellDef> Gläubiger Id </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.glaeubigerId">-</span>
+                    <span *ngIf="element.glaeubigerId">{{element.glaeubigerId}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="mandatsreferenzVisible" matColumnDef="mandatsreferenz">
+                <th mat-header-cell *matHeaderCellDef> Mandatsreferenz </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.mandatsreferenz">-</span>
+                    <span *ngIf="element.mandatsreferenz">{{element.mandatsreferenz}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="sammlerreferenzVisible" matColumnDef="sammlerreferenz">
+                <th mat-header-cell *matHeaderCellDef> Sammlerreferenz </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.sammlerreferenz">-</span>
+                    <span *ngIf="element.sammlerreferenz">{{element.sammlerreferenz}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="lastschriftUrsprungsbetragVisible" matColumnDef="lastschriftUrsprungsbetrag">
+                <th mat-header-cell *matHeaderCellDef> Lastschrift Ursprungsbetrag </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.lastschriftUrsprungsbetrag">-</span>
+                    <span *ngIf="element.lastschriftUrsprungsbetrag">{{element.lastschriftUrsprungsbetrag}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="auslagenersatzRuecklastschriftVisible" matColumnDef="auslagenersatzRuecklastschrift">
+                <th mat-header-cell *matHeaderCellDef> Auslagenersatz Rücklastschrift </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.auslagenersatzRuecklastschrift">-</span>
+                    <span
+                        *ngIf="element.auslagenersatzRuecklastschrift">{{element.auslagenersatzRuecklastschrift}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="beguenstigterVisible" matColumnDef="beguenstigter">
+                <th mat-header-cell *matHeaderCellDef> Begünstigter </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.beguenstigter">-</span>
+                    <span *ngIf="element.beguenstigter">{{element.beguenstigter}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="ibanVisible" matColumnDef="iban">
+                <th mat-header-cell *matHeaderCellDef> IBAN</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.iban">-</span>
+                    <span *ngIf="element.iban">{{element.iban}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="bicVisible" matColumnDef="bic">
+                <th mat-header-cell *matHeaderCellDef> BIC </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.bic">-</span>
+                    <span *ngIf="element.bic">{{element.bic}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="betragVisible" matColumnDef="betrag">
+                <th mat-header-cell *matHeaderCellDef> Betrag </th>
+                <td mat-cell class="align-celltext-right" *matCellDef="let element">
+                    <span *ngIf="!element.betrag">-</span>
+                    <span *ngIf="element.betrag">{{element.betrag.toFixed(2)}}
+                        {{toWaehrungsZeichen(element.waehrung)}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="buchungstextVisible" matColumnDef="buchungstext">
+                <th mat-header-cell *matHeaderCellDef> Buchungstext </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.buchungstext">-</span>
+                    <span *ngIf="element.buchungstext">{{element.buchungstext}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="infoVisible" matColumnDef="info">
+                <th mat-header-cell *matHeaderCellDef> Info </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="!element.info">-</span>
+                    <span *ngIf="element.info">{{element.info}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="detail">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element" width="10%">
+                    <button mat-button role="link">Detail</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="accountingEntriesGridColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: accountingEntriesGridColumns;"
+                [routerLink]="['/accounting/umsaetze/detail', row.id]"></tr>
+        </table>
+
+        <mat-paginator [length]="accountingEntriesDataSource.totalCount$ | async" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 20, 50]">
+        </mat-paginator>
+
+        <div *ngIf="accountingEntriesDataSource.loading$ | async" class="loading">
+            <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+        </div>
+    </div>
+</div>

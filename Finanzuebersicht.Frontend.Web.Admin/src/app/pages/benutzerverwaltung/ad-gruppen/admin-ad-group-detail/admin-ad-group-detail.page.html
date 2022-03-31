@@ -1,0 +1,43 @@
+<div class="admin-ad-group-detail-page" *ngIf="adminAdGroup">
+    <div class="toolbar">
+        <h1 class="no-wrap">AD-Gruppen: {{adminAdGroup.dn}}</h1>
+        <button mat-flat-button (click)="onBackClicked()">
+            Zurück
+        </button>
+        <button mat-flat-button color="primary" class="save-button" (click)="onUpdateClicked()">
+            <mat-icon class="mat-icon-button-fix">drive_file_rename_outline</mat-icon>
+            DN ändern
+        </button>
+        <button mat-flat-button color="warn" class="save-button" (click)="onDeleteClicked()">
+            <mat-icon class="mat-icon-button-fix">delete</mat-icon>
+            Löschen
+        </button>
+    </div>
+
+    <mat-tab-group mat-align-tabs="start">
+
+        <mat-tab label="Details">
+            <h3>Stammdaten:</h3>
+            <p [attr.aria-label]="'AD-Gruppen: ' + adminAdGroup.dn">
+                <span style="font-size: 0.8em;" aria-hidden="true">Name:</span>
+                <br>
+                <span aria-hidden="true" class="no-wrap">{{adminAdGroup.dn}}</span>
+            </p>
+
+            <h3>Berechnete Berechtigungen:</h3>
+            <app-permissions-display [permissions]="adminAdGroup.calculatedPermissions"></app-permissions-display>
+        </mat-tab>
+
+        <mat-tab label="Berechtigungen">
+            <app-permissions [userType]="userType" [id]="adminAdGroupId" [permissions]="adminAdGroup.permissions"
+                (permissionsUpdated)="loadAdminAdGroup()">
+            </app-permissions>
+        </mat-tab>
+
+        <mat-tab label="Mitglied von">
+            <app-member-of [myAdminUserGroups]="adminAdGroup.parentAdminUserGroups" [myId]="adminAdGroupId" [userType]="userType"
+                (memberUpdate)="loadAdminAdGroup()"></app-member-of>
+        </mat-tab>
+
+    </mat-tab-group>
+</div>

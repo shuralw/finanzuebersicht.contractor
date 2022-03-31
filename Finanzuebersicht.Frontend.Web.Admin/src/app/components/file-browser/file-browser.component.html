@@ -1,0 +1,16 @@
+<dx-popup class="popup" [width]="348" [height]="'auto'" [showTitle]="true" [title]="title"
+  [closeOnOutsideClick]="true" [dragEnabled]="false" [(visible)]="popupVisible" #popup (onHiding)="close()">
+  <div *dxTemplate="let data of 'content'">
+    <div class="centermargin" style="margin-top: 0px;">
+      <p>
+        {{desc}}
+      </p>
+    </div>
+    <div class="centermargin">
+      <input class="file-upload-input" type='file' (change)="fileChanged($event)" accept="*.csv" />
+    </div>
+    <div class="centermargin">
+      <dx-button text="Upload" icon="upload" (onClick)="upload()" [disabled]="isUploading"></dx-button>
+    </div>
+  </div>
+</dx-popup>

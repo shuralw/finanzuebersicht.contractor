@@ -1,0 +1,6 @@
+<krz-layout applicationName="Finanzübersicht" [userMenu]="userMenu" [mainMenu]="mainMenu" (OnBack)="goBack()">
+  <div *ngIf="loading" class="loading-spinner-container">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <router-outlet *ngIf="!loading"></router-outlet>
+</krz-layout>

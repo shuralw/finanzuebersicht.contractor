@@ -1,0 +1,43 @@
+table {
+    width: 100%;
+
+    &.showFilterBar {
+        .table-title-row {
+            height: 32px;
+
+            th {
+                border: none;
+            }
+        }
+
+        .table-filter-row {
+            height: 50px;
+
+            th {
+                height: 32px;
+                top: 32px !important;
+            }
+        }
+    }
+
+    &.hideFilterBar {
+        .table-filter-row {
+            display: none;
+        }
+    }
+}
+
+.mat-row {
+    transition: background-color 0.1s ease-in-out;
+
+    &:hover {
+        background-color: #ebebeb;
+    }
+}
+
+.loading {
+    width: var(--content-width);
+    display: grid;
+    justify-content: center;
+    margin: 16px 0;
+}

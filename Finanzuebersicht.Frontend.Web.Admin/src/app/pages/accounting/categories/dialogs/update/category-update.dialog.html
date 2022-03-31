@@ -1,0 +1,72 @@
+<div class="toolbar">
+    <h1 mat-dialog-title>
+        Kategorie ändern
+    </h1>
+    <button mat-icon-button [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <div class="loading" *ngIf="!categoryUpdateForm">
+        <mat-progress-spinner color="primary" mode="indeterminate" diameter="50"></mat-progress-spinner>
+    </div>
+    <div class="category-update-dialog" *ngIf="categoryUpdateForm">
+        <form [formGroup]="categoryUpdateForm">
+            <search-dropdown [formGroupInstance]="categoryUpdateForm" [formControlNameInstance]="'superCategoryId'"
+                label="Übergeordnete Kategorie" idExpr="id" displayExpr="title" [dataSource]="superCategoryDataSource"
+                [initialItem]="selectedSuperCategory">
+            </search-dropdown>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Bezeichnung</mat-label>
+                <input matInput formControlName="title" required="true" maxlength="200"
+                    placeholder="z.B. Wocheneinkauf">
+                <mat-hint *ngIf="categoryUpdateForm.controls.title.value" [align]="'end'">
+                    {{categoryUpdateForm.controls.title.value.length}} / 200
+                </mat-hint>
+                <mat-error
+                    *ngIf="categoryUpdateForm.controls.title.touched && categoryUpdateForm.controls.title.invalid">
+                    <span *ngIf="categoryUpdateForm.controls.title.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="categoryUpdateForm.controls.title.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Farbcode (Hexcode)</mat-label>
+                <input matInput formControlName="color" required="true" maxlength="30" placeholder="#000000">
+                <mat-hint *ngIf="categoryUpdateForm.controls.color.value" [align]="'end'">
+                    {{categoryUpdateForm.controls.color.value.length}} / 30
+                </mat-hint>
+                <mat-error
+                    *ngIf="categoryUpdateForm.controls.color.touched && categoryUpdateForm.controls.color.invalid">
+                    <span *ngIf="categoryUpdateForm.controls.color.errors.required">
+                        Dieses Feld ist erforderlich.
+                    </span>
+                    <span *ngIf="categoryUpdateForm.controls.color.errors.pattern">
+                        Dieses Feld ist ungültig.
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+        </form>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="onUpdateClicked()" [disabled]="!categoryUpdateForm"
+            [attr.aria-disabled]="!categoryUpdateForm">
+            <mat-icon class="mat-icon-button-fix">save</mat-icon>
+            Speichern
+        </button>
+
+        <button mat-flat-button [mat-dialog-close]="false">
+            Abbrechen
+        </button>
+    </div>
+</mat-dialog-actions>

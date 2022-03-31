@@ -1,0 +1,26 @@
+CREATE TABLE [dbo].[AccountingEntries] (
+    [Id]                   UNIQUEIDENTIFIER NOT NULL,
+	[EmailUserId]	   UNIQUEIDENTIFIER NOT NULL,
+	[CategoryId]           UNIQUEIDENTIFIER NULL,
+	[Auftragskonto]        NVARCHAR (30)   NOT NULL,
+	[Buchungsdatum]        DATETIME         NOT NULL,
+	[ValutaDatum]          DATETIME         NOT NULL,
+	[Buchungstext]         NVARCHAR (300)   NOT NULL,
+	[Verwendungszweck]     NVARCHAR (4000)   NOT NULL,
+	[GlaeubigerId]         NVARCHAR (100)   NULL,
+	[Mandatsreferenz]      NVARCHAR (100)   NULL,
+	[Sammlerreferenz]      NVARCHAR (100)   NULL,
+	[LastschriftUrsprungsbetrag] DECIMAL(8,2)            NULL,
+	[AuslagenersatzRuecklastschrift] NVARCHAR (1000)   NULL,
+	[Beguenstigter]        NVARCHAR (2000)   NOT NULL,
+	[IBAN]                 NVARCHAR (50)   NOT NULL,
+	[BIC]                  NVARCHAR (50)   NOT NULL,
+	[Betrag]               DECIMAL(8,2)            NOT NULL,
+	[Waehrung]             NVARCHAR (10)   NOT NULL,
+	[Info]                 NVARCHAR (4000)   NOT NULL,
+    CONSTRAINT [PK_AccountingEntries_Id] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_AccountingEntries_EmailUserId] FOREIGN KEY ([EmailUserId]) REFERENCES [dbo].[AdminEmailUsers] ([Id]),
+    CONSTRAINT [FK_AccountingEntries_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [dbo].[Categories] ([Id]),
+);
+
+GO
