@@ -1,3 +1,3 @@
 # finanzuebersicht
-Das ennwort für den Testnutzer test@test.de ist 123QWEasd!. 
-Es muss in der Datenbank noch ein insert Befehl für den Startsaldo ausgeführt werden.
+Das Kennwort für den Testnutzer test@test.de ist 123QWEasd!
+Die Datenbank kann mittels des dbCreateScript vollständig erstellt werden.
