@@ -10,8 +10,6 @@ COPY pipeline.npmrc .npmrc
 COPY package.json .
 COPY package-lock.json .
 
-RUN npm config set proxy "http://wsg.asp.krzwan.de:8080/"
-
 # Install dependencies
 RUN npm install
 

@@ -3,5 +3,5 @@
 
     // Environment variables
     window['env']['ssoWebserviceBaseUrl'] = 'https://ad-auth-api.krz.de';
-    window['env']['backendCoreBaseUrl'] = 'http://localhost:5010';
+    window['env']['backendCoreBaseUrl'] = 'http://localhost:5000';
 })(this);

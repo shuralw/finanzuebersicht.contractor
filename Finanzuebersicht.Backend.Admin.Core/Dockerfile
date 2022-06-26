@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-ENV http_proxy="http://wsg.asp.krzwan.de:8080/"
-ENV https_proxy="http://wsg.asp.krzwan.de:8080/"
 
 COPY . .
 RUN dotnet restore "Contract/Core.Contract.csproj"
