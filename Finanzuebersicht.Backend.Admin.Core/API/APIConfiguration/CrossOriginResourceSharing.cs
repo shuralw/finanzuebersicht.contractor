@@ -12,7 +12,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.APIConfiguration
                     policy.WithOrigins(configuration["CorsOrigins"])
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()));
+                        .AllowAnyOrigin()));
         }
     }
 }
