@@ -9,10 +9,10 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.APIConfiguration
         {
             services.AddCors(cors =>
                 cors.AddDefaultPolicy(policy =>
-                    policy
+                    policy.WithOrigins(configuration["CorsOrigins"])
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowAnyOrigin()));
+                        .AllowCredentials()));
         }
     }
 }
