@@ -37,3 +37,15 @@ steps:
   args:
   - 'push'
   - 'gcr.io/$PROJECT_ID/$SHORT_SHA'
+
+# Deploy
+- name: 'gcr.io/cloud-builders/gcloud'
+  dir: 'Finanzuebersicht.Backend.Admin.Core'
+  args:
+  - 'run'
+  - 'deploy'
+  - 'run'
+  - '$PROJECT_ID'
+  - '--region=us-east1'
+  - '--platform=managed'
+  - 'gcr.io/$PROJECT_ID/$SHORT_SHA'
