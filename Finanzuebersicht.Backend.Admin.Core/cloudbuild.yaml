@@ -1,5 +1,3 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'us-central1-docker.pkg.dev/firm-progress-279912/finanzuebersicht:$SHORT_SHA', '.' ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/firm-progress-279912/finanzuebersicht:$SHORT_SHA']
