@@ -3,7 +3,7 @@
   - 'build'
   - '--tag=gcr.io/firm-progress-279912/docker:19.03.9'
   - '--file=Dockerfile-versioned'
-  - '--build-arg=${_DOCKER_19}'
+#- '--build-arg=${_DOCKER_19}'
   - '.'
   id: '19.03.9'
   wait_for: ['base']
