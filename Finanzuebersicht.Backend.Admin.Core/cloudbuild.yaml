@@ -10,20 +10,22 @@ steps:
 # Dockerfile for subsequent steps but is not pushed. Building this shared base
 # image enables the versioned builders to share base layers.
 - name: 'gcr.io/cloud-builders/docker'
+  dir: 'Finanzuebersicht.Backend.Admin.Core'
   args:
   - 'build'
   - '--tag=temp'
-  - '--file=Finanzuebersicht.Backend.Admin.Core/Dockerfile'
+  - '--file=Dockerfile'
   - '.'
   id: 'base'
 
 #
 # Build all supported versions.
 - name: 'gcr.io/cloud-builders/docker'
+  dir: 'Finanzuebersicht.Backend.Admin.Core'
   args:
   - 'build'
   - '--tag=gcr.io/$PROJECT_ID/docker:19.03.9'
-  - '--file=Finanzuebersicht.Backend.Admin.Core/Dockerfile'
+  - '--file=Dockerfile'
   - '--build-arg=${_DOCKER_19}'
   - '.'
   id: '19.03.9'
