@@ -75,6 +75,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
         {
             var efAccountingEntries = this.dbContext.AccountingEntries
                 .Include(efAccountingEntry => efAccountingEntry.Category)
+                .Take(2)
                 .Where(efAccountingEntry => efAccountingEntry.EmailUserId == this.sessionContext.AdminEmailUserId);
 
             return Pagination.Filter(
@@ -87,6 +88,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
         {
             var efAccountingEntries = this.dbContext.AccountingEntries
                 .Include(efAccountingEntry => efAccountingEntry.Category)
+                .Take(2)
                 .Where(efAccountingEntry => efAccountingEntry.EmailUserId == this.sessionContext.AdminEmailUserId)
                 .Where(efAccountingEntry => efAccountingEntry.Buchungsdatum >= fromDate && efAccountingEntry.Buchungsdatum < toDate);
 
@@ -98,6 +100,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
         {
             return this.dbContext.AccountingEntries
                 .Include(efAccountingEntry => efAccountingEntry.Category)
+                .Take(2)
                 .Where(efAccountingEntry => efAccountingEntry.EmailUserId == this.sessionContext.AdminEmailUserId)
                 .Select(efAccountingEntry => DbAccountingEntryChartItem.FromEfAccountingEntry(efAccountingEntry));
         }
