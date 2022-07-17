@@ -13,7 +13,7 @@ steps:
   args:
   - 'build'
   - '--tag=temp'
-  - '--file=Dockerfile'
+  - '--file=Finanzuebersicht.Backend.Admin.Core/Dockerfile'
   - '.'
   id: 'base'
 
@@ -23,7 +23,7 @@ steps:
   args:
   - 'build'
   - '--tag=gcr.io/$PROJECT_ID/docker:19.03.9'
-  - '--file=Dockerfile'
+  - '--file=Finanzuebersicht.Backend.Admin.Core/Dockerfile'
   - '--build-arg=${_DOCKER_19}'
   - '.'
   id: '19.03.9'
