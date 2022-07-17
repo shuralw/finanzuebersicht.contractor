@@ -1,0 +1,6 @@
+steps:
+- name: 'gcr.io/cloud-buidlers/docker'
+  args: ['build', '-t ', 'gcr.io/firm-progress-279912/finanzuebersicht:$SHORT_SHA', '.']
+  
+- name: 'gcr.io/cloud-buidlers/docker'
+  args: ['push', 'gcr.io/firm-progress-279912/finanzuebersicht:$SHORT_SHA']
