@@ -1,3 +1,14 @@
-steps:
+#steps:
+#- name: 'gcr.io/cloud-builders/docker'
+#  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/firm-progress-279912/finanzuebersicht:$SHORT_SHA', '.' ]
+#firm-progress-279912
+# Build all supported versions.
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/firm-progress-279912/finanzuebersicht:$SHORT_SHA', '.' ]
+  args:
+  - 'build'
+  - '--tag=gcr.io/$PROJECT_ID/docker:19.03.9'
+  - '--file=Dockerfile-versioned'
+  - '--build-arg=${_DOCKER_19}'
+  - '.'
+  id: '19.03.9'
+  wait_for: ['base']
