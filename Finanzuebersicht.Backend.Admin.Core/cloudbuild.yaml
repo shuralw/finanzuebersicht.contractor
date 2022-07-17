@@ -6,6 +6,18 @@ substitutions:
   _DOCKER_20: DOCKER_VERSION=5:20.10.14~3-0~ubuntu-focal
 
 steps:
+# Pre-requisite: build the base OS container; 'temp' is referenced in the
+# Dockerfile for subsequent steps but is not pushed. Building this shared base
+# image enables the versioned builders to share base layers.
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--tag=temp'
+  - '--file=Dockerfile'
+  - '.'
+  id: 'base'
+
+#
 # Build all supported versions.
 - name: 'gcr.io/cloud-builders/docker'
   args:
