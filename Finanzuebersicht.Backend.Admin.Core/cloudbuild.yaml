@@ -1,7 +1,7 @@
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'build'
-  - '--tag=gcr.io/$PROJECT_ID/docker:19.03.9'
+  - '--tag=gcr.io/firm-progress-279912/docker:19.03.9'
   - '--file=Dockerfile-versioned'
   - '--build-arg=${_DOCKER_19}'
   - '.'
