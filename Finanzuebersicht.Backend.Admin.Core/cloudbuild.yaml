@@ -44,8 +44,7 @@ steps:
   args:
   - 'run'
   - 'deploy'
-  - 'run'
-  - '$PROJECT_ID'
-  - '--region=us-east1'
+  - 'cloudrun-finanzuebersicht-backend'
+  - '--region=us-central1'
   - '--platform=managed'
-  - 'gcr.io/$PROJECT_ID/$SHORT_SHA'
+  - '--image=gcr.io/$PROJECT_ID/$SHORT_SHA'
