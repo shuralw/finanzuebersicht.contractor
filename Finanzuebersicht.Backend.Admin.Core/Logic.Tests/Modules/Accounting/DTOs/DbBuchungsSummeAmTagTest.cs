@@ -6,8 +6,6 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTO
 {
     internal class DbBuchungssummeAmTagTest : IDbBuchungssummeAmTag
     {
-        public Guid Id { get; set; }
-
         public DateTime Buchungsdatum { get; set; }
 
         public decimal Summe { get; set; }
@@ -18,7 +16,6 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTO
             {
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdSecondRegular,
                     Summe = BuchungssummeAmTagTestValues.SummeSecondRegular,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular,
                 },
@@ -32,14 +29,12 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTO
 
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdFirstDay1,
                     Summe = BuchungssummeAmTagTestValues.SummeFirstDay1,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumFirstDay1,
                 },
 
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdFifthDay28,
                     Summe = BuchungssummeAmTagTestValues.SummeFifthFifthDay28,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumFifthDay28,
                 },
@@ -52,13 +47,11 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTO
             {
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdSecondRegular,
                     Summe = BuchungssummeAmTagTestValues.SummeSecondRegular,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular,
                 },
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdThirdNegative,
                     Summe = BuchungssummeAmTagTestValues.SummeThirdNegative,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumThirdNegative,
                 },
@@ -71,13 +64,11 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTO
             {
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdSecondRegular,
                     Summe = BuchungssummeAmTagTestValues.SummeSecondRegular,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular,
                 },
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdSixthOutOfRange,
                     Summe = BuchungssummeAmTagTestValues.SummeSixthSixthOutOfRange,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumSixthOutOfRange,
                 },
@@ -90,19 +81,16 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTO
             {
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdSecondRegular,
                     Summe = BuchungssummeAmTagTestValues.SummeSecondRegular,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular,
                 },
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdThirdNegative,
                     Summe = BuchungssummeAmTagTestValues.SummeThirdNegative,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumThirdNegative,
                 },
                 new DbBuchungssummeAmTagTest
                 {
-                    Id = BuchungssummeAmTagTestValues.IdFourthSameDayAsThird,
                     Summe = BuchungssummeAmTagTestValues.SummeFourtFourthSameDayAsThird,
                     Buchungsdatum = BuchungssummeAmTagTestValues.BuchungsdatumFourthSameDayAsThird,
                 },

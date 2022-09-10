@@ -25,7 +25,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting
         public static readonly decimal SummeFifthFifthDay28 = 50000.00M;
         public static readonly decimal SummeSixthSixthOutOfRange = 600000.00M;
 
-        public static readonly DateTime FromDate = new DateTime(2022, 02, 01);
+        public static readonly DateTime FromDate = new DateTime(2022, 01, 31);
         public static readonly DateTime ToDate = new DateTime(2022, 02, 28);
     }
 }

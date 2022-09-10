@@ -1,4 +1,5 @@
-﻿using Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accounting.AccountingEntries;
+﻿using Finanzuebersicht.Backend.Admin.Core.Contract.Logic.LogicResults;
+using Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accounting.AccountingEntries;
 using Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accounting.StartSalden;
 using Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.AccountingEntries;
 using Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.DTOs;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.Services
@@ -32,13 +34,30 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.Ser
             var result = saldenLogic.GetBuchungssummeAnTagen(BuchungssummeAmTagTestValues.FromDate, BuchungssummeAmTagTestValues.ToDate);
 
             // Assert
-            var expected = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeSecondRegular;
-            var actual = result.Data
-                .First(buchungssumme => buchungssumme.Buchungsdatum == BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular)
-                .Summe;
+            if (StartSaldenTestValues.AmDatumDefault > BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular)
+            {
+                throw new Exception("Das Saldumsdatum sollte entweder vor dem Buchungsdatum vom Regular liegen oder es müssen die expected Werte angepasst werden.");
+            }
 
-            Assert.AreEqual(2, result.Data.Count());
-            Assert.AreEqual(expected, actual);
+            var expected_TagVorDerBuchung = StartSaldenTestValues.BetragDefault;
+            var expected_TagDerBuchung = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeSecondRegular;
+            var expected_TagNachDerBuchung = expected_TagDerBuchung;
+
+            decimal actual_TagVorDerBuchung = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular.AddDays(-1));
+            decimal actual_TagDerBuchung = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular);
+            decimal actual_TagNachDerBuchung = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular.AddDays(1));
+
+            Assert.AreEqual(29, result.Data.Count());
+            Assert.AreEqual(expected_TagVorDerBuchung, actual_TagVorDerBuchung);
+            Assert.AreEqual(expected_TagDerBuchung, actual_TagDerBuchung);
+            Assert.AreEqual(expected_TagNachDerBuchung, actual_TagNachDerBuchung);
+        }
+
+        private static decimal GetSummeAmTag(ILogicResult<IEnumerable<IDbBuchungssummeAmTag>> result, DateTime stichtag)
+        {
+            return result.Data
+                .First(buchungssumme => buchungssumme.Buchungsdatum == stichtag)
+                .Summe;
         }
 
         [TestMethod]
@@ -60,9 +79,23 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.Ser
             var result = saldenLogic.GetBuchungssummeAnTagen(BuchungssummeAmTagTestValues.FromDate, BuchungssummeAmTagTestValues.ToDate);
 
             // Assert
-            var expected = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeFirstDay1 + BuchungssummeAmTagTestValues.SummeFifthFifthDay28;
+            if (StartSaldenTestValues.AmDatumDefault > BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular)
+            {
+                throw new Exception("Das Saldumsdatum sollte entweder vor dem Buchungsdatum vom Regular liegen oder es müssen die expected Werte angepasst werden.");
+            }
 
-            Assert.AreEqual(expected, result.Data);
+            var expected_Tag1 = StartSaldenTestValues.BetragDefault;
+            var expected_VorTag1 = StartSaldenTestValues.BetragDefault - BuchungssummeAmTagTestValues.SummeFirstDay1;
+            var expected_Tag31 = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeFifthFifthDay28;
+
+            decimal actual_Tag1 = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumFirstDay1);
+            decimal actual_VorTag1 = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumFirstDay1.AddDays(-1));
+            decimal actual_Tag31 = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumFifthDay28);
+
+            Assert.AreEqual(29, result.Data.Count());
+            Assert.AreEqual(expected_Tag1, actual_Tag1);
+            Assert.AreEqual(expected_VorTag1, actual_VorTag1);
+            Assert.AreEqual(expected_Tag31, actual_Tag31);
         }
 
         [TestMethod]
@@ -84,9 +117,19 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.Ser
             var result = saldenLogic.GetBuchungssummeAnTagen(BuchungssummeAmTagTestValues.FromDate, BuchungssummeAmTagTestValues.ToDate);
 
             // Assert
-            var expected = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeSecondRegular + BuchungssummeAmTagTestValues.SummeThirdNegative;
+            if (StartSaldenTestValues.AmDatumDefault > BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular)
+            {
+                throw new Exception("Das Saldumsdatum sollte entweder vor dem Buchungsdatum vom Regular liegen oder es müssen die expected Werte angepasst werden.");
+            }
 
-            Assert.AreEqual(expected, result.Data);
+            var expected_TagDerNegativBuchung = StartSaldenTestValues.BetragDefault
+                + BuchungssummeAmTagTestValues.SummeSecondRegular
+                + BuchungssummeAmTagTestValues.SummeThirdNegative;
+
+            decimal actual_TagDerNegativBuchung = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumThirdNegative);
+
+            Assert.AreEqual(29, result.Data.Count());
+            Assert.AreEqual(expected_TagDerNegativBuchung, actual_TagDerNegativBuchung);
         }
 
         [TestMethod]
@@ -108,13 +151,23 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.Ser
             var result = saldenLogic.GetBuchungssummeAnTagen(BuchungssummeAmTagTestValues.FromDate, BuchungssummeAmTagTestValues.ToDate);
 
             // Assert
-            var expected = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeSecondRegular;
+            if (StartSaldenTestValues.AmDatumDefault > BuchungssummeAmTagTestValues.BuchungsdatumSecondRegular)
+            {
+                throw new Exception("Das Saldumsdatum sollte entweder vor dem Buchungsdatum vom Regular liegen oder es müssen die expected Werte angepasst werden.");
+            }
 
-            Assert.AreEqual(expected, result.Data);
+            var expected_Tag28 = StartSaldenTestValues.BetragDefault
+                + BuchungssummeAmTagTestValues.SummeSecondRegular;
+
+            decimal actual_Tag28 = GetSummeAmTag(result, BuchungssummeAmTagTestValues.BuchungsdatumFifthDay28);
+
+            Assert.AreEqual(29, result.Data.Count());
+            Assert.AreEqual(expected_Tag28, actual_Tag28);
         }
 
         [TestMethod]
-        public void GetBuchungssummeAnTagen_RegularPlusTwoAtSameDay_AllThreeValues()
+        [ExpectedException(typeof(System.InvalidOperationException))]
+        public void GetBuchungssummeAnTagen_TwoAtSameDay_SingleException()
         {
             // Arrange
             Mock<IAccountingEntriesCrudRepository> accountingEntriesCrudRepository = this.SetupAccountingEntriesCrudRepository_RegularPlusTwoAtSameDay();
@@ -130,13 +183,6 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Tests.Modules.Accounting.Ser
 
             // Act
             var result = saldenLogic.GetBuchungssummeAnTagen(BuchungssummeAmTagTestValues.FromDate, BuchungssummeAmTagTestValues.ToDate);
-
-            // Assert
-            var expected = StartSaldenTestValues.BetragDefault + BuchungssummeAmTagTestValues.SummeSecondRegular
-                + BuchungssummeAmTagTestValues.SummeThirdNegative
-                + BuchungssummeAmTagTestValues.SummeFourtFourthSameDayAsThird;
-
-            Assert.AreEqual(expected, result.Data);
         }
 
         private Mock<IStartSaldenCrudRepository> SetupStartSaldenCrudRepository()

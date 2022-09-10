@@ -38,56 +38,62 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
 
             decimal currentSaldo = startSaldo.Betrag;
 
-            // StartSaldo
-            // AmDatum 03.02.2022
-            // Betrag 0.05
+            var liste = new List<BuchungssummeAmTag>();
 
-            // Regular Entry
-            // Buchungsdatum 11.02.2022
-            // Summe 20.50
-
-            // Takes each day and increments the current saldo at each day
-
-            foreach (var item in tagesSalden.Where(date => date.Buchungsdatum <= startSaldo.AmDatum))
+            if (fromDate > startSaldo.AmDatum)
             {
-
+                throw new Exception("Das FromDate darf nicht größer als Startsaldo Date sein.");
             }
 
-            List<BuchungssummeAmTag> result = this.DateRange(fromDate, toDate)
-                .Where(date => date <= startSaldo.AmDatum)
-                .Reverse()
-                .Select(date =>
+            if (toDate < startSaldo.AmDatum)
+            {
+                throw new Exception("Das FromDate darf nicht größer als Startsaldo Date sein.");
+            }
+
+            IEnumerable<DateTime> tageMitRückwärtsrechnung = this.DateRange(fromDate, startSaldo.AmDatum.AddDays(-1))
+                .Reverse();
+
+            foreach (var date in tageMitRückwärtsrechnung)
+            {
+                var buchungsSummeAtDate = tagesSalden.ToList().SingleOrDefault(tagesSaldo =>
+                     tagesSaldo.Buchungsdatum
+                     .AddDays(-1)
+                     .ToShortDateString().Equals(date.ToShortDateString()));
+
+                if (buchungsSummeAtDate != null)
                 {
-                    var buchungsSummeAtDate = tagesSalden.ToList().Find(tagesSaldo =>
-                       tagesSaldo.Buchungsdatum.ToShortDateString().Equals(date.ToShortDateString()));
+                    currentSaldo -= buchungsSummeAtDate.Summe;
+                }
 
-                    if (buchungsSummeAtDate != null)
-                    {
-                        currentSaldo -= buchungsSummeAtDate.Summe;
-                    }
-
-                    return new BuchungssummeAmTag { Buchungsdatum = date, Summe = currentSaldo };
-                })
-                .ToList();
-
-            result.Concat(this.DateRange(fromDate, toDate)
-                .Where(date => date > startSaldo.AmDatum)
-                .Select(date =>
+                liste.Add(new BuchungssummeAmTag
                 {
-                    var buchungsSummeAtDate = tagesSalden.ToList().Find(tagesSaldo =>
-                       tagesSaldo.Buchungsdatum.ToShortDateString().Equals(date.ToShortDateString()));
+                    Buchungsdatum = date,
+                    Summe = currentSaldo,
+                });
+            }
 
-                    if (buchungsSummeAtDate != null)
-                    {
-                        currentSaldo += buchungsSummeAtDate.Summe;
-                    }
+            currentSaldo = startSaldo.Betrag;
 
-                    return new BuchungssummeAmTag { Buchungsdatum = date, Summe = currentSaldo };
-                })
-                .ToList());
+            IEnumerable<DateTime> tageMitVorwärtsrechnung = this.DateRange(startSaldo.AmDatum, toDate);
+            foreach (var date in tageMitVorwärtsrechnung)
+            {
+                var buchungsSummeAtDate = tagesSalden.ToList().SingleOrDefault(tagesSaldo =>
+                   tagesSaldo.Buchungsdatum.ToShortDateString().Equals(date.ToShortDateString()));
+
+                if (buchungsSummeAtDate != null)
+                {
+                    currentSaldo += buchungsSummeAtDate.Summe;
+                }
+
+                liste.Add(new BuchungssummeAmTag
+                {
+                    Buchungsdatum = date,
+                    Summe = currentSaldo,
+                });
+            }
 
             this.logger.LogDebug("AccountingEntries wurden geladen");
-            return LogicResult<IEnumerable<IDbBuchungssummeAmTag>>.Ok(result);
+            return LogicResult<IEnumerable<IDbBuchungssummeAmTag>>.Ok(liste);
         }
 
         private IEnumerable<DateTime> DateRange(DateTime fromDate, DateTime toDate)
