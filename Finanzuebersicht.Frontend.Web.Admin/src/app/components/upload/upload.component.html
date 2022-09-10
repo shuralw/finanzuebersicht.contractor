@@ -1,14 +1,16 @@
-<div class="row" style="margin-bottom:15px;">
-    <div class="col-md-3">
-      <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
-      <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
-    </div>
-    <div class="col-md-4">
-      <span class="upload" *ngIf="progress > 0">
-        {{progress}}%
-      </span>
-      <span class="upload" *ngIf="message">
-        {{message}}
-      </span>
+<div class="gridcontainer">
+  <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+
+  <div class="spinner">
+    <div *ngIf="inProgress">
+      <mat-progress-spinner color="primary" mode="indeterminate" diameter="30"></mat-progress-spinner>
     </div>
   </div>
+
+  <div class="button">
+    <button mat-flat-button color="primary" (click)="file.click()">
+      <mat-icon class="mat-icon-button-fix">add</mat-icon>
+      CSV einlesen
+    </button>
+  </div>
+</div>

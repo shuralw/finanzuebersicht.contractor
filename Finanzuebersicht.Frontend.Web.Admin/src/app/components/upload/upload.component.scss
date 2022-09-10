@@ -1,0 +1,21 @@
+.gridcontainer {
+    display: grid;
+    grid-template-columns: 60px min-content;
+    grid-template-rows: auto;
+    grid-template-areas: "spinner button";
+    width: min-content;
+
+    .spinner {
+        display: grid;
+        align-items: center;
+        justify-content: center;
+
+        grid-area: spinner;
+    }
+
+    .button {
+        height: min-content;
+        width: min-content;
+        grid-area: button;
+    }
+}

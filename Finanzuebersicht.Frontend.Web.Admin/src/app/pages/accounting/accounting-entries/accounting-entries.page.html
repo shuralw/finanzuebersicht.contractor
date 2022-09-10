@@ -1,14 +1,18 @@
 <div class="accounting-entries-page">
     <div class="toolbar">
-        <h1>Buchungen</h1>
-        <button mat-flat-button color="primary" (click)="openCreateDialog()">
-            <mat-icon class="mat-icon-button-fix">add</mat-icon>
-            Buchung erstellen
-        </button>
-        <button mat-flat-button color="primary" (click)="openCsvImportDialog()">
-            <mat-icon class="mat-icon-button-fix">save_alt</mat-icon>
-            CSV importieren
-        </button>
+        <div class="header">
+            <h1>Buchungen</h1>
+        </div>
+        <div class="buchung-erstellen">
+            <button mat-flat-button color="primary" (click)="openCreateDialog()">
+                <mat-icon class="mat-icon-button-fix">add</mat-icon>
+                Buchung erstellen
+            </button>
+        </div>
+        <div class="csv-import">
+            <app-upload>
+            </app-upload>
+        </div>
     </div>
 
     <div class="expansionPanel">

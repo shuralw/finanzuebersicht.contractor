@@ -53,11 +53,11 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
             return LogicResult<Guid>.Ok(newAccountingEntryId);
         }
 
-        public async Task<ILogicResult<Guid[]>> CreateAccountingEntries(IAsyncEnumerable<IAccountingEntryCreate> accountingEntryCreates)
+        public async Task<ILogicResult<Guid[]>> CreateAccountingEntries(IAsyncEnumerable<IAccountingEntryMultipleCreate> accountingEntryCreates)
         {
             List<Guid> result = new List<Guid>();
 
-            await foreach (IAccountingEntryCreate accountingEntryCreate in accountingEntryCreates)
+            await foreach (IAccountingEntryMultipleCreate accountingEntryCreate in accountingEntryCreates)
             {
                 Guid newAccountingEntryId = this.guidGenerator.NewGuid();
                 IDbAccountingEntry dbAccountingEntryToCreate = AccountingEntry.CreateDbAccountingEntry(newAccountingEntryId, accountingEntryCreate);

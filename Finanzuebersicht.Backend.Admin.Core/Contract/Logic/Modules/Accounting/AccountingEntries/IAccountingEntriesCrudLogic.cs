@@ -10,7 +10,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Logic.Modules.Accounting.
     {
         ILogicResult<Guid> CreateAccountingEntry(IAccountingEntryCreate accountingEntryCreate);
 
-        Task<ILogicResult<Guid[]>> CreateAccountingEntries(IAsyncEnumerable<IAccountingEntryCreate> accountingEntryCreates);
+        Task<ILogicResult<Guid[]>> CreateAccountingEntries(IAsyncEnumerable<IAccountingEntryMultipleCreate> accountingEntryCreates);
 
         ILogicResult DeleteAccountingEntry(Guid accountingEntryId);
 

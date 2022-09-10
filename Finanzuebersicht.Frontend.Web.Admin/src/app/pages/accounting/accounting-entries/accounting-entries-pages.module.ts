@@ -29,7 +29,6 @@ import { AccountingEntryDetailPage } from './sub-pages/detail/accounting-entry-d
 import { DxFileUploaderModule, } from 'devextreme-angular';
 import { AuswertungComponentsModule } from 'src/app/components/auswertung/auswertung-components.module';
 import { SaldenModule } from 'src/app/model/accounting/salden/salden.module';
-import { CsvUploadDialog } from './dialogs/csv-upload/csv-upload.dialog';
 import { UploadComponent } from 'src/app/components/upload/upload.component';
 import { UploadComponentsModule } from 'src/app/components/upload/upload-components.module';
 
@@ -37,7 +36,6 @@ import { UploadComponentsModule } from 'src/app/components/upload/upload-compone
   declarations: [
     AccountingEntriesPage,
     AccountingEntryCreateDialog,
-    CsvUploadDialog,
     AccountingEntryDetailPage,
     AccountingEntryUpdateDialog,
   ],

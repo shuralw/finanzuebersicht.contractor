@@ -4,9 +4,20 @@
     .toolbar {
         display: grid;
         grid-template-columns: auto min-content min-content;
-        grid-template-rows: 50px min-content;
+        grid-template-rows: min-content;
         grid-column-gap: 18px;
+        grid-template-areas: "header csv-import buchung-erstellen";
 
+        .header{
+            grid-area: header;
+        }
+        .buchung-erstellen{
+            grid-area: buchung-erstellen;
+        }
+        .csv-import{
+            grid-area: csv-import;
+        }
+        
         h1 {
             display: block;
             margin: 0;

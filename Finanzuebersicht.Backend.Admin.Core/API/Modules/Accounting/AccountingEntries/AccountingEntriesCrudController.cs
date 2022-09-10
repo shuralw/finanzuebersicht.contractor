@@ -81,44 +81,38 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.AccountingE
                 },
             };
 
-            using (TextReader textReader = new StreamReader(this.Request.Body, Encoding.UTF8, true, 1024, true))
-            using (var csv = new CsvReader(textReader, csvConfiguration))
+            try
             {
-                IAsyncEnumerable<IAccountingEntryMultipleCreate> accountingEntryMultipleCreates;
-
-                // Ganz ehrlich: Die ersten drei Zeilen vom Body_Stream enthalten Daten wie die Datei encoded ist oder so.
-                // Ich habe es nach ner halben Stunde nicht rausbekommen wie ich die skippe. Also skip ich die ersten drei Zeilen einfach so:
-                await textReader.ReadLineAsync();
-                await textReader.ReadLineAsync();
-                await textReader.ReadLineAsync();
-                csv.Context.RegisterClassMap<FooMap>();
-
-                //while (csv.ReadAsync())
-                //{
-                //    var record = csv.GetRecord<AccountingEntryCreate>();
-                //    if (record.Betrag != null)
-                //    {
-                //        accountingEntryMultipleCreates.Add(record);
-                //    }
-                //}
-
-                accountingEntryMultipleCreates = csv.GetRecordsAsync<AccountingEntryMultipleCreate>()
-                    .Where(ae => !String.IsNullOrEmpty(ae.Auftragskonto) && ae.Betrag != null);
-
-                var x = await accountingEntryMultipleCreates.ToListAsync();
-
-                ILogicResult<Guid[]> createAccountingEntryResult = await this.accountingEntriesCrudLogic
-                    .CreateAccountingEntries(accountingEntryMultipleCreates);
-
-                if (!createAccountingEntryResult.IsSuccessful)
+                using (TextReader textReader = new StreamReader(this.Request.Body, Encoding.UTF8, true, 1024, true))
+                using (var csv = new CsvReader(textReader, csvConfiguration))
                 {
-                    return this.FromLogicResult(createAccountingEntryResult);
+                    IAsyncEnumerable<IAccountingEntryMultipleCreate> accountingEntryMultipleCreates;
+
+                    // Ganz ehrlich: Die ersten drei Zeilen vom Body_Stream enthalten Daten wie die Datei encoded ist oder so.
+                    // Ich habe es nach ner halben Stunde nicht rausbekommen wie ich die skippe. Also skip ich die ersten drei Zeilen einfach so:
+                    await textReader.ReadLineAsync();
+                    await textReader.ReadLineAsync();
+                    await textReader.ReadLineAsync();
+                    csv.Context.RegisterClassMap<FooMap>();
+
+                    accountingEntryMultipleCreates = csv.GetRecordsAsync<AccountingEntryMultipleCreate>()
+                        .Where(ae => !String.IsNullOrEmpty(ae.Auftragskonto) && ae.Betrag != null);
+
+                    ILogicResult<Guid[]> createAccountingEntryResult = await this.accountingEntriesCrudLogic
+                        .CreateAccountingEntries(accountingEntryMultipleCreates);
+
+                    if (!createAccountingEntryResult.IsSuccessful)
+                    {
+                        return this.FromLogicResult(createAccountingEntryResult);
+                    }
+
+                    return this.Ok(new DataBody<Guid[]>(createAccountingEntryResult.Data));
                 }
-
-                return this.Ok(new DataBody<Guid[]>(createAccountingEntryResult.Data));
             }
-
-            return this.BadRequest();
+            catch (Exception)
+            {
+                return this.BadRequest();
+            }
         }
 
         private MissingFieldFound HandleMissingFieldFound()

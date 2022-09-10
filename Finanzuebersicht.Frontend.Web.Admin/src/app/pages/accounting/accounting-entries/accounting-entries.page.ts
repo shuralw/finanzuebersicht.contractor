@@ -14,7 +14,6 @@ import { CategoriesCrudService } from 'src/app/model/accounting/categories/categ
 import { ISaldoListItem } from 'src/app/model/accounting/salden/dtos/i-saldo-list-item';
 import { SaldenCrudService } from 'src/app/model/accounting/salden/salden-crud.service';
 import { AccountingEntryCreateDialog } from './dialogs/create/accounting-entry-create.dialog';
-import { CsvUploadDialog } from './dialogs/csv-upload/csv-upload.dialog';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import * as moment from 'moment';
@@ -141,16 +140,6 @@ export class AccountingEntriesPage implements AfterViewInit, OnInit {
   openCreateDialog(): void {
     this.matDialog.open(AccountingEntryCreateDialog, {
       maxHeight: '90vh'
-    });
-  }
-
-  openCsvImportDialog(): void {
-    this.matDialog.open(CsvUploadDialog, {
-      maxHeight: '90vh'
-    });
-
-    this.matDialog.afterAllClosed.subscribe(result => {
-      this.accountingEntriesDataSource.triggerUpdate();
     });
   }
 
