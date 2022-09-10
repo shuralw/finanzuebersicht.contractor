@@ -15,6 +15,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.AccountingEntries
@@ -61,31 +62,22 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.AccountingE
         }
 
         [HttpPost, DisableRequestSizeLimit]
-        //[]
         [Route("multiple")]
-        //public async Task<ActionResult> Upload([FromForm] IFormFile file)
-        public async Task<ActionResult<DataBody<Guid>>> Upload([FromForm] IFormFile file)
+        public async Task<ActionResult<DataBody<Guid>>> Upload()
         {
-            var BodyReader = this.Request.BodyReader;
-            var Body = this.Request.Body;
-            //var file = this.Request.Form.Files[0];
-            if (file.Length > 0)
+            var csvConfiguration = new CsvConfiguration(new CultureInfo("de-DE"));
+            csvConfiguration.Delimiter = ";";
+            csvConfiguration.HasHeaderRecord = true;
+
+            IAsyncEnumerable<AccountingEntryCreate> accountingEntryCreates;
+
+            using (TextReader textReader = new StreamReader(this.Request.Body, Encoding.UTF8, true, 1024, true))
+            using (var csv = new CsvReader(textReader, csvConfiguration))
             {
-                var csvConfiguration = new CsvConfiguration(new CultureInfo("de-DE"));
-                csvConfiguration.Delimiter = ";";
-                csvConfiguration.HasHeaderRecord = true;
+                csv.Context.RegisterClassMap<FooMap>();
+                accountingEntryCreates = csv.GetRecordsAsync<AccountingEntryCreate>();
 
-                var x = await this.ReadFormFileAsync(file);
-                IEnumerable<AccountingEntryCreate> accountingEntryCreates;
-
-                TextReader textReader = new StreamReader(file.OpenReadStream());
-                using (var csv = new CsvReader(textReader, csvConfiguration))
-                {
-                    csv.Context.RegisterClassMap<FooMap>();
-                    accountingEntryCreates = csv.GetRecords<AccountingEntryCreate>().ToList();
-                }
-
-                ILogicResult<Guid[]> createAccountingEntryResult = this.accountingEntriesCrudLogic.CreateAccountingEntries(accountingEntryCreates);
+                ILogicResult<Guid[]> createAccountingEntryResult = await this.accountingEntriesCrudLogic.CreateAccountingEntries(accountingEntryCreates);
 
                 if (!createAccountingEntryResult.IsSuccessful)
                 {
@@ -94,10 +86,9 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.AccountingE
 
                 return this.Ok(new DataBody<Guid[]>(createAccountingEntryResult.Data));
             }
-            else
-            {
-                return this.BadRequest();
-            }
+
+
+            return BadRequest();
         }
 
         public sealed class FooMap : ClassMap<AccountingEntryCreate>

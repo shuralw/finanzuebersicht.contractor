@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.AccountingEntries
 {
@@ -52,11 +53,11 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
             return LogicResult<Guid>.Ok(newAccountingEntryId);
         }
 
-        public ILogicResult<Guid[]> CreateAccountingEntries(IEnumerable<IAccountingEntryCreate> accountingEntryCreates)
+        public async Task<ILogicResult<Guid[]>> CreateAccountingEntries(IAsyncEnumerable<IAccountingEntryCreate> accountingEntryCreates)
         {
             List<Guid> result = new List<Guid>();
 
-            foreach (IAccountingEntryCreate accountingEntryCreate in accountingEntryCreates)
+            await foreach (IAccountingEntryCreate accountingEntryCreate in accountingEntryCreates)
             {
                 Guid newAccountingEntryId = this.guidGenerator.NewGuid();
                 IDbAccountingEntry dbAccountingEntryToCreate = AccountingEntry.CreateDbAccountingEntry(newAccountingEntryId, accountingEntryCreate);
