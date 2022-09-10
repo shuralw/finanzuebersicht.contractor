@@ -38,6 +38,17 @@ export class CategoriesCrudService {
         return newCategoryId;
     }
 
+    public async createCategories(formData: FormData): Promise<string> {
+        const options = {
+            body: formData
+        };
+
+        const result = await this.backendCoreService.post<{ data: string }>('/api/accounting/categories/multiple', options);
+
+        const newCategoryId = result.data;
+        return newCategoryId;
+    }
+
     public async updateCategory(categoryUpdate: ICategoryUpdate): Promise<void> {
         const options = {
             body: categoryUpdate

@@ -30,7 +30,8 @@ import { DxFileUploaderModule, } from 'devextreme-angular';
 import { AuswertungComponentsModule } from 'src/app/components/auswertung/auswertung-components.module';
 import { SaldenModule } from 'src/app/model/accounting/salden/salden.module';
 import { CsvUploadDialog } from './dialogs/csv-upload/csv-upload.dialog';
-import { FilePickerComponent } from 'src/app/components/auswertung/file-picker/file-picker.component';
+import { UploadComponent } from 'src/app/components/upload/upload.component';
+import { UploadComponentsModule } from 'src/app/components/upload/upload-components.module';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { FilePickerComponent } from 'src/app/components/auswertung/file-picker/f
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    UploadComponentsModule,
 
     // Devextreme Modules
     DxFileUploaderModule,

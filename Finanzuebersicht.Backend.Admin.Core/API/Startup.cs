@@ -57,6 +57,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.API
             app.UseMiddleware<PaginationExceptionMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/health");

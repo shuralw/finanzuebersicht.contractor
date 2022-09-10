@@ -52,7 +52,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
             return LogicResult<Guid>.Ok(newAccountingEntryId);
         }
 
-        public ILogicResult<Guid[]> CreateAccountingEntries(IAccountingEntryCreate[] accountingEntryCreates)
+        public ILogicResult<Guid[]> CreateAccountingEntries(IEnumerable<IAccountingEntryCreate> accountingEntryCreates)
         {
             List<Guid> result = new List<Guid>();
 

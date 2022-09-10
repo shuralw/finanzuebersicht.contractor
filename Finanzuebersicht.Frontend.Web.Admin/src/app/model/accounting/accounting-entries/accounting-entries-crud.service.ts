@@ -33,9 +33,9 @@ export class AccountingEntriesCrudService {
         return newAccountingEntryId;
     }
 
-    public async createAccountingEntries(accountingEntryCreates: IAccountingEntryCreate[]): Promise<string> {
+    public async createAccountingEntries(formData: FormData): Promise<string> {
         const options = {
-            body: accountingEntryCreates
+            body: formData
         };
 
         const result = await this.backendCoreService.post<{ data: string }>('/api/accounting/accounting-entries/multiple', options);

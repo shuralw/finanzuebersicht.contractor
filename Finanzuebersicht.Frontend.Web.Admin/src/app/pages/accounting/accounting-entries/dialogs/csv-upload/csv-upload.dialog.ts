@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { parseNumber } from 'devextreme/localization';
 import * as moment from 'moment';
+import { UploadComponent } from 'src/app/components/upload/upload.component';
 import { parseCsv } from 'src/app/helpers/csv-helper';
 import { AccountingEntriesCrudService } from 'src/app/model/accounting/accounting-entries/accounting-entries-crud.service';
 import { IAccountingEntryCreate } from 'src/app/model/accounting/accounting-entries/dtos/i-accounting-entry-create';
@@ -28,6 +29,10 @@ export class CsvUploadDialog implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+  }
+
+  onCreate = () => {
+
   }
 
   async loadCsvFile(file: File): Promise<void> {

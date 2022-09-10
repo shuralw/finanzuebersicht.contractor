@@ -1,32 +1,6 @@
-.toolbar {
-    display: grid;
-    grid-template-columns: auto 40px;
-    padding-bottom: 12px;
-    align-items: center;
-
-    h1 {
-        font-size: 1.2em;
-        margin: 0;
-    }
-}
-
-.accounting-entry-create-dialog {
-    mat-form-field {
-        width: 100%;
-        padding: 8px 0;
-    }
-
-    mat-checkbox {
-        display: block;
-        margin-left: 6px;
-    }
-}
-
-.buttons {
-    text-align: right;
-    background-color: white;
-
-    button {
-        margin-left: 12px;
-    }
-}
+.upload{
+    font-weight:bold;
+    color:#28a745;
+    margin-left: 15px;
+    line-height: 36px;
+  }

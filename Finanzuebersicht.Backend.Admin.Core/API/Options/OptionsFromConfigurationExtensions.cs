@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
@@ -19,6 +20,13 @@ namespace Finanzuebersicht.Backend.Admin.Core.API
                     section.Bind(options);
                 }
             }));
+
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBoundaryLengthLimit = int.MaxValue;
+                options.MemoryBufferThreshold = int.MinValue;
+            });
         }
     }
 }

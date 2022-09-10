@@ -13,6 +13,8 @@ import { BackendCoreService } from './services/backend/backend-core.service';
 import { BackendSsoService } from './services/backend/backend-sso.service';
 import { AppEventModule } from './services/event/app-event.module';
 import { PendingChangesGuard } from './tools/guards/pending-changes-guard';
+import { UploadComponent } from './components/upload/upload.component';
+import { UploadComponentsModule } from './components/upload/upload-components.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { PendingChangesGuard } from './tools/guards/pending-changes-guard';
     AppEventModule,
     KrzLayoutModule,
     UiComponentsModule,
+    UploadComponentsModule,
     SessionsServicesModule,
     AdminAdLoginModule,
     AppRoutingModule,

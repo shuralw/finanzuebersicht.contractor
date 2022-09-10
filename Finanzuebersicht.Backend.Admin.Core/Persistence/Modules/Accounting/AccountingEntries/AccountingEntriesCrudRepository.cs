@@ -29,7 +29,8 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
 
         public void CreateAccountingEntry(IDbAccountingEntry dbAccountingEntry)
         {
-            this.dbContext.AccountingEntries.Add(DbAccountingEntry.ToEfAccountingEntry(dbAccountingEntry, this.sessionContext.AdminEmailUserId.Value));
+            var efAccountingEntry = DbAccountingEntry.ToEfAccountingEntry(dbAccountingEntry, this.sessionContext.AdminEmailUserId.Value);
+            this.dbContext.AccountingEntries.Add(efAccountingEntry);
             this.dbContext.SaveChanges();
         }
 

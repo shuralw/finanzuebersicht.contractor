@@ -14,6 +14,13 @@
 
 <mat-dialog-actions align="end">
     <div class="buttons">
+        <app-upload>
+        </app-upload>
+        <div class="row">
+            <div class="offset-md-5 col-md-2">
+                <button type="button" class="btn btn-primary" (click)="onCreate()">Create </button>
+            </div>
+        </div>
         <button mat-flat-button color="primary" (click)="submit_debug()">
             <mat-icon class="mat-icon-button-fix">add</mat-icon>
             Erstellen
