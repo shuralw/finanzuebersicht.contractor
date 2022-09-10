@@ -117,5 +117,38 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
                 Info = accountingEntryCreate.Info,
             };
         }
+
+        internal static IDbAccountingEntry CreateDbAccountingEntry(Guid accountingEntryId, IAccountingEntryMultipleCreate accountingEntryCreate)
+        {
+            try
+            {
+
+            return new DbAccountingEntry()
+            {
+                Id = accountingEntryId,
+                CategoryId = accountingEntryCreate.CategoryId,
+                Auftragskonto = accountingEntryCreate.Auftragskonto,
+                Buchungsdatum = accountingEntryCreate.Buchungsdatum.Value,
+                ValutaDatum = accountingEntryCreate.ValutaDatum.Value,
+                Buchungstext = accountingEntryCreate.Buchungstext,
+                Verwendungszweck = accountingEntryCreate.Verwendungszweck,
+                GlaeubigerId = accountingEntryCreate.GlaeubigerId,
+                Mandatsreferenz = accountingEntryCreate.Mandatsreferenz,
+                Sammlerreferenz = accountingEntryCreate.Sammlerreferenz,
+                LastschriftUrsprungsbetrag = accountingEntryCreate.LastschriftUrsprungsbetrag,
+                AuslagenersatzRuecklastschrift = accountingEntryCreate.AuslagenersatzRuecklastschrift,
+                Beguenstigter = accountingEntryCreate.Beguenstigter,
+                IBAN = accountingEntryCreate.IBAN,
+                BIC = accountingEntryCreate.BIC,
+                Betrag = accountingEntryCreate.Betrag,
+                Waehrung = accountingEntryCreate.Waehrung,
+                Info = accountingEntryCreate.Info,
+            };
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }

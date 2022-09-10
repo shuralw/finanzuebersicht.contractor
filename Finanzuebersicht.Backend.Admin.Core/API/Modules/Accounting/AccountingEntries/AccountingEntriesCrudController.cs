@@ -7,14 +7,12 @@ using Finanzuebersicht.Backend.Admin.Core.Contract.Logic.Modules.Accounting.Acco
 using Finanzuebersicht.Backend.Admin.Core.Contract.Logic.Tools.Pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,19 +63,52 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.AccountingE
         [Route("multiple")]
         public async Task<ActionResult<DataBody<Guid>>> Upload()
         {
-            var csvConfiguration = new CsvConfiguration(new CultureInfo("de-DE"));
-            csvConfiguration.Delimiter = ";";
-            csvConfiguration.HasHeaderRecord = true;
-
-            IAsyncEnumerable<AccountingEntryCreate> accountingEntryCreates;
+            var bad = new List<string>();
+            var missing = new List<int>();
+            var csvConfiguration = new CsvConfiguration(new CultureInfo("de-DE"))
+            {
+                Delimiter = ";",
+                HasHeaderRecord = true,
+                MissingFieldFound = context =>
+                {
+                    //isRecordBad = true;
+                    missing.Add(context.Index);
+                },
+                BadDataFound = context =>
+                {
+                    //isRecordBad = true;
+                    bad.Add(context.RawRecord);
+                },
+            };
 
             using (TextReader textReader = new StreamReader(this.Request.Body, Encoding.UTF8, true, 1024, true))
             using (var csv = new CsvReader(textReader, csvConfiguration))
             {
-                csv.Context.RegisterClassMap<FooMap>();
-                accountingEntryCreates = csv.GetRecordsAsync<AccountingEntryCreate>();
+                IAsyncEnumerable<IAccountingEntryMultipleCreate> accountingEntryMultipleCreates;
 
-                ILogicResult<Guid[]> createAccountingEntryResult = await this.accountingEntriesCrudLogic.CreateAccountingEntries(accountingEntryCreates);
+                // Ganz ehrlich: Die ersten drei Zeilen vom Body_Stream enthalten Daten wie die Datei encoded ist oder so.
+                // Ich habe es nach ner halben Stunde nicht rausbekommen wie ich die skippe. Also skip ich die ersten drei Zeilen einfach so:
+                await textReader.ReadLineAsync();
+                await textReader.ReadLineAsync();
+                await textReader.ReadLineAsync();
+                csv.Context.RegisterClassMap<FooMap>();
+
+                //while (csv.ReadAsync())
+                //{
+                //    var record = csv.GetRecord<AccountingEntryCreate>();
+                //    if (record.Betrag != null)
+                //    {
+                //        accountingEntryMultipleCreates.Add(record);
+                //    }
+                //}
+
+                accountingEntryMultipleCreates = csv.GetRecordsAsync<AccountingEntryMultipleCreate>()
+                    .Where(ae => !String.IsNullOrEmpty(ae.Auftragskonto) && ae.Betrag != null);
+
+                var x = await accountingEntryMultipleCreates.ToListAsync();
+
+                ILogicResult<Guid[]> createAccountingEntryResult = await this.accountingEntriesCrudLogic
+                    .CreateAccountingEntries(accountingEntryMultipleCreates);
 
                 if (!createAccountingEntryResult.IsSuccessful)
                 {
@@ -87,11 +118,22 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.AccountingE
                 return this.Ok(new DataBody<Guid[]>(createAccountingEntryResult.Data));
             }
 
-
-            return BadRequest();
+            return this.BadRequest();
         }
 
-        public sealed class FooMap : ClassMap<AccountingEntryCreate>
+        private MissingFieldFound HandleMissingFieldFound()
+        {
+            return null;
+            throw new Exception("Missing Data Found");
+        }
+
+        private BadDataFound HandleBadDataFound()
+        {
+            return null;
+            throw new Exception("Bad Data Found");
+        }
+
+        public sealed class FooMap : ClassMap<AccountingEntryMultipleCreate>
         {
             public FooMap()
             {
