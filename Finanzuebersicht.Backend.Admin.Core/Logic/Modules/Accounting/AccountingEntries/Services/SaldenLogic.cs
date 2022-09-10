@@ -33,7 +33,6 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
 
         public ILogicResult<IEnumerable<IDbBuchungssummeAmTag>> GetBuchungssummeAnTagen(DateTime fromDate, DateTime toDate)
         {
-            IEnumerable<IDbBuchungssummeAmTag> tagesSalden = this.accountingEntriesCrudRepository.GetBuchungsSummeAnTagen(fromDate, toDate);
             IDbStartSaldo startSaldo = this.startSaldenCrudRepository.GetStartSaldo();
 
             decimal currentSaldo = startSaldo.Betrag;
@@ -42,13 +41,14 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
 
             if (fromDate > startSaldo.AmDatum)
             {
-                throw new Exception("Das FromDate darf nicht größer als Startsaldo Date sein.");
+                fromDate = startSaldo.AmDatum;
+            }
+            else if (toDate < startSaldo.AmDatum)
+            {
+                toDate = startSaldo.AmDatum;
             }
 
-            if (toDate < startSaldo.AmDatum)
-            {
-                throw new Exception("Das FromDate darf nicht größer als Startsaldo Date sein.");
-            }
+            IEnumerable<IDbBuchungssummeAmTag> tagesSalden = this.accountingEntriesCrudRepository.GetBuchungsSummeAnTagen(fromDate, toDate);
 
             IEnumerable<DateTime> tageMitRückwärtsrechnung = this.DateRange(fromDate, startSaldo.AmDatum.AddDays(-1))
                 .Reverse();
