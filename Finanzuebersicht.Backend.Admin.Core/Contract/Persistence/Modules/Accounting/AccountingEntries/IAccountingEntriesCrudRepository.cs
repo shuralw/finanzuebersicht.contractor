@@ -22,7 +22,8 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accou
 
         void UpdateAccountingEntry(IDbAccountingEntryUpdate dbAccountingEntryUpdate);
 
-        IEnumerable<IBuchungsSummeAmTag> GetBuchungsSummeAnTagen(DateTime fromDate, DateTime toDate);
+        IEnumerable<IDbBuchungssummeAmTag> GetBuchungsSummeAnTagen(DateTime fromDate, DateTime toDate);
+
         IEnumerable<IDbAccountingEntryListItem> GetAccountingEntries(DateTime fromDate, DateTime toDate);
     }
 }

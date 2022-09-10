@@ -7,6 +7,6 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Logic.Modules.Accounting.
 {
     public interface ISaldenLogic
     {
-        ILogicResult<IEnumerable<IBuchungsSummeAmTag>> GetBuchungssummeAnTagen(DateTime fromDate, DateTime toDate);
+        ILogicResult<IEnumerable<IDbBuchungssummeAmTag>> GetBuchungssummeAnTagen(DateTime fromDate, DateTime toDate);
     }
 }

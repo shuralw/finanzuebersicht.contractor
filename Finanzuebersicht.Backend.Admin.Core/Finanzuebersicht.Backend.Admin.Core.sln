@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29519.87
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.API", "API\Core.API.csproj", "{C9A4D693-C722-431A-A89F-3AB5ABA9DCF7}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		stylecop.json = stylecop.json
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Logic.Tests", "Logic.Tests\Core.Logic.Tests.csproj", "{C1AC0925-C5B3-4F4A-83B0-377F0DC594A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{44865505-7EBB-45AA-82C6-A1D4DA402EB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44865505-7EBB-45AA-82C6-A1D4DA402EB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44865505-7EBB-45AA-82C6-A1D4DA402EB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1AC0925-C5B3-4F4A-83B0-377F0DC594A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1AC0925-C5B3-4F4A-83B0-377F0DC594A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1AC0925-C5B3-4F4A-83B0-377F0DC594A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1AC0925-C5B3-4F4A-83B0-377F0DC594A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

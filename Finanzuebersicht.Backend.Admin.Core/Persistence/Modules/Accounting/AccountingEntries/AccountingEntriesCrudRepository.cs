@@ -114,7 +114,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
             this.dbContext.SaveChanges();
         }
 
-        public IEnumerable<IBuchungsSummeAmTag> GetBuchungsSummeAnTagen(DateTime fromDate, DateTime toDate)
+        public IEnumerable<IDbBuchungssummeAmTag> GetBuchungsSummeAnTagen(DateTime fromDate, DateTime toDate)
         {
             var x = this.dbContext.AccountingEntries
                 .Where(accountingEntry => accountingEntry.Buchungsdatum >= fromDate && accountingEntry.Buchungsdatum <= toDate)
@@ -122,7 +122,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
                 .ToList()
                 .GroupBy(accountingEntry => accountingEntry.Buchungsdatum)
                 .ToList()
-                .Select(groupedAccountingEntry => new BuchungsSummeAmTag()
+                .Select(groupedAccountingEntry => new DbBuchungssummeAmTag()
                 {
                     Buchungsdatum = groupedAccountingEntry.First().Buchungsdatum,
                     Summe = groupedAccountingEntry.Sum(accountingEntry => (accountingEntry.Betrag == null ? 0 : accountingEntry.Betrag.Value))

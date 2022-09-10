@@ -17,13 +17,13 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
         private readonly IAccountingEntriesCrudRepository accountingEntriesCrudRepository;
         private readonly IStartSaldenCrudRepository startSaldenCrudRepository;
 
-        private readonly ILogger<AccountingEntriesCrudLogic> logger;
+        private readonly ILogger<SaldenLogic> logger;
 
         public SaldenLogic(
             IAccountingEntriesCrudRepository accountingEntriesCrudRepository,
             IStartSaldenCrudRepository startSaldenCrudRepository,
             IGuidGenerator guidGenerator,
-            ILogger<AccountingEntriesCrudLogic> logger)
+            ILogger<SaldenLogic> logger)
         {
             this.accountingEntriesCrudRepository = accountingEntriesCrudRepository;
             this.startSaldenCrudRepository = startSaldenCrudRepository;
@@ -31,15 +31,29 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
             this.logger = logger;
         }
 
-        public ILogicResult<IEnumerable<IBuchungsSummeAmTag>> GetBuchungssummeAnTagen(DateTime fromDate, DateTime toDate)
+        public ILogicResult<IEnumerable<IDbBuchungssummeAmTag>> GetBuchungssummeAnTagen(DateTime fromDate, DateTime toDate)
         {
-            IEnumerable<IBuchungsSummeAmTag> tagesSalden = this.accountingEntriesCrudRepository.GetBuchungsSummeAnTagen(fromDate, toDate);
+            IEnumerable<IDbBuchungssummeAmTag> tagesSalden = this.accountingEntriesCrudRepository.GetBuchungsSummeAnTagen(fromDate, toDate);
             IDbStartSaldo startSaldo = this.startSaldenCrudRepository.GetStartSaldo();
 
             decimal currentSaldo = startSaldo.Betrag;
 
+            // StartSaldo
+            // AmDatum 03.02.2022
+            // Betrag 0.05
+
+            // Regular Entry
+            // Buchungsdatum 11.02.2022
+            // Summe 20.50
+
             // Takes each day and increments the current saldo at each day
-            List<BuchungsSummeAmTag> result = this.DateRange(fromDate, toDate)
+
+            foreach (var item in tagesSalden.Where(date => date.Buchungsdatum <= startSaldo.AmDatum))
+            {
+
+            }
+
+            List<BuchungssummeAmTag> result = this.DateRange(fromDate, toDate)
                 .Where(date => date <= startSaldo.AmDatum)
                 .Reverse()
                 .Select(date =>
@@ -52,7 +66,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
                         currentSaldo -= buchungsSummeAtDate.Summe;
                     }
 
-                    return new BuchungsSummeAmTag { Buchungsdatum = date, Summe = currentSaldo };
+                    return new BuchungssummeAmTag { Buchungsdatum = date, Summe = currentSaldo };
                 })
                 .ToList();
 
@@ -68,12 +82,12 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Accountin
                         currentSaldo += buchungsSummeAtDate.Summe;
                     }
 
-                    return new BuchungsSummeAmTag { Buchungsdatum = date, Summe = currentSaldo };
+                    return new BuchungssummeAmTag { Buchungsdatum = date, Summe = currentSaldo };
                 })
                 .ToList());
 
             this.logger.LogDebug("AccountingEntries wurden geladen");
-            return LogicResult<IEnumerable<IBuchungsSummeAmTag>>.Ok(result);
+            return LogicResult<IEnumerable<IDbBuchungssummeAmTag>>.Ok(result);
         }
 
         private IEnumerable<DateTime> DateRange(DateTime fromDate, DateTime toDate)
