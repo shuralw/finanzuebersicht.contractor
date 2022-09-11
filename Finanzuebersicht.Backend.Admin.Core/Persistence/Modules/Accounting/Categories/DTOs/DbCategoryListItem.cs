@@ -27,7 +27,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
             return new DbCategoryListItem()
             {
                 Id = efCategory.Id,
-                SuperCategory = DbCategory.FromEfCategory(efCategory.SuperCategory),
+                SuperCategory = DbCategory.FromEfCategory(efCategory.Parent),
                 Title = efCategory.Title,
                 Color = efCategory.Color,
                 Summe = efCategory.AccountingEntries.Sum(accountingEntry => accountingEntry.Betrag) ?? 0

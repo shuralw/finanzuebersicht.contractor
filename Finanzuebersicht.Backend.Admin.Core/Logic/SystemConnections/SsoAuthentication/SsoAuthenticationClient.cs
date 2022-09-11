@@ -4,6 +4,7 @@ using RestSharp;
 using Finanzuebersicht.Backend.Admin.Core.Contract.Logic.SystemConnections.SsoAuthentication;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace Finanzuebersicht.Backend.Admin.Core.Logic.SystemConnections.SsoAuthentication
 {
@@ -26,7 +27,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.SystemConnections.SsoAuthent
             var restRequest = new RestRequest("/validate")
             {
                 Resource = "/validate",
-                Method = Method.POST
+                Method = Method.Post
             };
 
             restRequest.AddQueryParameter("type", "distinguishedname");
@@ -36,7 +37,9 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.SystemConnections.SsoAuthent
                 Groups = adminUserGroups
             });
 
-            this.logger.LogInformation("Zwecks SSO-Authentication wird {url} angefragt", this.restClient.BaseUrl + restRequest.Resource);
+            throw new NotImplementedException();
+
+            // this.logger.LogInformation("Zwecks SSO-Authentication wird {url} angefragt", this.restClient.BaseUrl + restRequest.Resource);
             var response = await this.restClient.ExecuteAsync<SsoValidationResponse>(restRequest);
             if (!response.IsSuccessful)
             {

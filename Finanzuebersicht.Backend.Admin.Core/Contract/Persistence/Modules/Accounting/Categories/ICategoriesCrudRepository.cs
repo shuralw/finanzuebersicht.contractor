@@ -21,5 +21,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accou
         IEnumerable<IDbCategory> GetAllCategories();
 
         void UpdateCategory(IDbCategoryUpdate dbCategoryUpdate);
+
+        IEnumerable<Guid> GetCategoryDescendants(Guid? supercategoryId);
     }
 }

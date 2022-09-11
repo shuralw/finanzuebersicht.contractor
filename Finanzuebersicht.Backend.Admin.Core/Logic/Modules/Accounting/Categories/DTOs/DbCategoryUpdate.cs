@@ -8,7 +8,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
     {
         public Guid Id { get; set; }
 
-        public Guid? SuperCategoryId { get; set; }
+        public object ParentId { get; set; }
 
         public string Title { get; set; }
 
@@ -19,7 +19,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
             return new DbCategoryUpdate()
             {
                 Id = categoryUpdate.Id,
-                SuperCategoryId = categoryUpdate.SuperCategoryId,
+                ParentId = categoryUpdate.SuperCategoryId,
                 Title = categoryUpdate.Title,
                 Color = categoryUpdate.Color,
             };

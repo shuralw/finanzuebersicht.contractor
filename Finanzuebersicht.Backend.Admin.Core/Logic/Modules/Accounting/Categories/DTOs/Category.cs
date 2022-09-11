@@ -8,7 +8,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
     {
         public Guid Id { get; set; }
 
-        public Guid? SuperCategoryId { get; set; }
+        public object ParentId { get; set; }
 
         public string Title { get; set; }
 
@@ -18,7 +18,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
 
         internal static void UpdateDbCategory(IDbCategory dbCategory, ICategoryUpdate categoryUpdate)
         {
-            dbCategory.SuperCategoryId = categoryUpdate.SuperCategoryId;
+            dbCategory.ParentId = categoryUpdate.SuperCategoryId;
             dbCategory.Title = categoryUpdate.Title;
             dbCategory.Color = categoryUpdate.Color;
         }
@@ -33,7 +33,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
             return new Category()
             {
                 Id = dbCategory.Id,
-                SuperCategoryId = dbCategory.SuperCategoryId,
+                ParentId = dbCategory.ParentId,
                 Title = dbCategory.Title,
                 Color = dbCategory.Color,
             };
@@ -44,7 +44,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
             return new DbCategory()
             {
                 Id = categoryId,
-                SuperCategoryId = categoryCreate.SuperCategoryId,
+                ParentId = categoryCreate.SuperCategoryId,
                 Title = categoryCreate.Title,
                 Color = categoryCreate.Color,
             };

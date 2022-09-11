@@ -6,10 +6,10 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accou
     {
         Guid Id { get; set; }
 
-        Guid? SuperCategoryId { get; set; }
-
         string Title { get; set; }
 
         string Color { get; set; }
+
+        object ParentId { get; set; }
     }
 }

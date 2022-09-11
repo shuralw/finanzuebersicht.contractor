@@ -31,10 +31,10 @@ namespace Finanzuebersicht.Backend.Admin.Core.API.Modules.Accounting.Categories
 
         [HttpGet]
         [Authorized]
-        [Route("all-summed")]
-        public ActionResult<IEnumerable<ICategory>> GetSummedCategories()
+        [Route("all-summed/supercategoryId")]
+        public ActionResult<IEnumerable<ICategory>> GetSummedCategories(Guid categoryId)
         {
-            var categoriesResult = this.categoriesCrudLogic.GetAllSummedCategories();
+            var categoriesResult = this.categoriesCrudLogic.GetAllSummedCategories(categoryId);
             return this.FromLogicResult(categoriesResult);
         }
 

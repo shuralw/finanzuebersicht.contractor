@@ -1,4 +1,5 @@
 using Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accounting.Categories;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Categories
@@ -7,7 +8,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
     {
         public Guid Id { get; set; }
 
-        public Guid? SuperCategoryId { get; set; }
+        public object ParentId { get; set; }
 
         public string Title { get; set; }
 
@@ -17,7 +18,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
 
         internal static void UpdateEfCategory(EfCategory efCategory, IDbCategoryUpdate dbCategoryUpdate)
         {
-            efCategory.SuperCategoryId = dbCategoryUpdate.SuperCategoryId;
+            efCategory.ParentId = (HierarchyId)dbCategoryUpdate.ParentId;
             efCategory.Title = dbCategoryUpdate.Title;
             efCategory.Color = dbCategoryUpdate.Color;
         }
@@ -32,7 +33,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
             return new DbCategory()
             {
                 Id = efCategory.Id,
-                SuperCategoryId = efCategory.SuperCategoryId,
+                ParentId = efCategory.ParentId,
                 Title = efCategory.Title,
                 Color = efCategory.Color,
             };
@@ -44,7 +45,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
             {
                 Id = dbCategory.Id,
                 EmailUserId = emailUserId,
-                SuperCategoryId = dbCategory.SuperCategoryId,
+                ParentId = (HierarchyId)dbCategory.ParentId,
                 Title = dbCategory.Title,
                 Color = dbCategory.Color,
             };

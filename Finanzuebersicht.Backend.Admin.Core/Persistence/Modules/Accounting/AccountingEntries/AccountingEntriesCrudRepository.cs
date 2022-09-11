@@ -94,12 +94,12 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Acc
             return efAccountingEntries.Select(efAccountingEntry => DbAccountingEntryListItem.FromEfAccountingEntry(efAccountingEntry));
         }
 
-
-        public IEnumerable<IDbAccountingEntryChartItem> GetAllAccountingEntries()
+        public IEnumerable<IDbAccountingEntryChartItem> GetAccountingEntries(IEnumerable<Guid> categoryIds)
         {
             return this.dbContext.AccountingEntries
                 .Include(efAccountingEntry => efAccountingEntry.Category)
-                .Where(efAccountingEntry => efAccountingEntry.EmailUserId == this.sessionContext.AdminEmailUserId)
+                .Where(efAccountingEntry => efAccountingEntry.EmailUserId == this.sessionContext.AdminEmailUserId
+                    && (categoryIds.Count() == 0 || categoryIds.Contains(efAccountingEntry.CategoryId.Value)))
                 .Select(efAccountingEntry => DbAccountingEntryChartItem.FromEfAccountingEntry(efAccountingEntry));
         }
 

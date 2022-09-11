@@ -38,6 +38,9 @@ export class PieChartPage implements AfterViewInit {
 
   pointClickHandler(e): void {
     this.toggleVisibility(e.target);
+    console.log(e.target);
+    console.log(e.target.data);
+    console.log(e);
   }
 
   legendClickHandler(e): void {

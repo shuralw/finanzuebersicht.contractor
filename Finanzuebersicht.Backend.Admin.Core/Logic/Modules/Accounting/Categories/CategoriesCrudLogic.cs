@@ -106,21 +106,30 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
             return LogicResult<IPagedResult<ICategoryListItem>>.Ok(categoriesPagedResult);
         }
 
-        public ILogicResult<IEnumerable<ICategoryChartItem>> GetAllSummedCategories()
+        public ILogicResult<IEnumerable<ICategoryChartItem>> GetAllSummedCategories(Guid? supercategoryId)
         {
+            IEnumerable<Guid> descendants = this.GetCategoryDescendants(supercategoryId);
+
             IEnumerable<IDbAccountingEntryChartItem> dbAccountingEntriesResult =
-                this.accountingEntriesCrudRepository.GetAllAccountingEntries();
+                this.accountingEntriesCrudRepository.GetAccountingEntries(descendants);
 
             dbAccountingEntriesResult = this.GetAccountingEntriesWithIdentifiedCategory(dbAccountingEntriesResult);
 
             IEnumerable<ICategoryChartItem> summedCategories = dbAccountingEntriesResult
                 .Where(accountingEntry => accountingEntry.Category != null)
                 .GroupBy(accountingEntry => accountingEntry.Category.Id)
-                .Select(accountingEntry => this.GetSummedCategory(accountingEntry));
-                //.Where(category => category.Summe < 0);
+                .Select(accountingEntryGroup => this.GetSummedCategory(accountingEntryGroup))
+                .GroupBy(categorySum => categorySum.SuperCategory.Id)
+                .Select(categorySumGroup => this.GetSummedCategory(categorySumGroup));
+            //.Where(category => category.Summe < 0);
 
             this.logger.LogDebug("Categories wurden geladen");
             return LogicResult<IEnumerable<ICategoryChartItem>>.Ok(summedCategories);
+        }
+
+        public IEnumerable<Guid> GetCategoryDescendants(Guid? supercategoryId)
+        {
+            return this.categoriesCrudRepository.GetCategoryDescendants(supercategoryId);
         }
 
         private IEnumerable<IDbAccountingEntryChartItem> GetAccountingEntriesWithIdentifiedCategory(IEnumerable<IDbAccountingEntryChartItem> dbAccountingEntriesResult)
@@ -130,11 +139,11 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
             foreach (IDbAccountingEntryChartItem accountingEntry in dbAccountingEntriesResult)
             {
                 List<string> zuDurchsuchendeProperties = new List<string>()
-                    {
-                        accountingEntry.Verwendungszweck,
-                        accountingEntry.Beguenstigter,
-                        accountingEntry.Buchungstext
-                    };
+                {
+                    accountingEntry.Verwendungszweck,
+                    accountingEntry.Beguenstigter,
+                    accountingEntry.Buchungstext
+                };
 
                 accountingEntry.Category = accountingEntry.Category != null
                     ? accountingEntry.Category
@@ -172,6 +181,13 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
         {
             ICategoryChartItem category = CategoryChartItem.FromDbCategoryDetail(this.categoriesCrudRepository.GetCategoryDetail(accountinEntryGroup.First().Category.Id));
             category.Summe = accountinEntryGroup.Sum(accountingEntry => accountingEntry.Betrag) ?? 0;
+            return category;
+        }
+
+        private ICategoryChartItem GetSummedCategory(IGrouping<Guid, ICategoryChartItem> categorySumGroup)
+        {
+            ICategoryChartItem category = CategoryChartItem.FromDbCategoryDetail(this.categoriesCrudRepository.GetCategoryDetail(categorySumGroup.First().SuperCategory.Id));
+            category.Summe = categorySumGroup.Sum(categorySum => categorySum.Summe);
             return category;
         }
     }

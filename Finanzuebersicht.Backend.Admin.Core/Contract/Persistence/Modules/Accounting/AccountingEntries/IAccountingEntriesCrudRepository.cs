@@ -18,7 +18,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Persistence.Modules.Accou
 
         IDbPagedResult<IDbAccountingEntryListItem> GetPagedAccountingEntries();
 
-        IEnumerable<IDbAccountingEntryChartItem> GetAllAccountingEntries();
+        IEnumerable<IDbAccountingEntryChartItem> GetAccountingEntries(IEnumerable<Guid> categoryId);
 
         void UpdateAccountingEntry(IDbAccountingEntryUpdate dbAccountingEntryUpdate);
 

@@ -65,7 +65,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
             EfCategory efCategory = this.dbContext.Categories
                 .Include(efCategory => efCategory.AccountingEntries)
                 .Include(efCategory => efCategory.ChildCategories)
-                .Include(efCategory => efCategory.SuperCategory)
+                .Include(efCategory => efCategory.Parent)
                 .Include(efCategory => efCategory.CategorySearchTerms)
                 .Where(efCategory => efCategory.Id == categoryId)
                 .Where(efCategory => efCategory.EmailUserId == this.sessionContext.AdminEmailUserId)
@@ -74,10 +74,21 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
             return DbCategoryDetail.FromEfCategory(efCategory);
         }
 
+        public IEnumerable<Guid> GetCategoryDescendants(Guid? supercategoryId)
+        {
+            var supercategoryHierarchyId = this.dbContext.Categories
+                .Single(cat => cat.Id == supercategoryId)
+                .HierarchyId;
+
+            return this.dbContext.Categories
+                .Where(cat => cat.HierarchyId.IsDescendantOf(supercategoryHierarchyId))
+                .Select(cat => cat.Id);
+        }
+
         public IDbPagedResult<IDbCategoryListItem> GetPagedCategories()
         {
             var efCategories = this.dbContext.Categories
-                .Include(efCategory => efCategory.SuperCategory)
+                .Include(efCategory => efCategory.Parent)
                 .Include(efCategory => efCategory.AccountingEntries)
                 .Where(efCategory => efCategory.EmailUserId == this.sessionContext.AdminEmailUserId);
 
@@ -100,6 +111,15 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
                 .Where(efCategory => efCategory.Id == dbCategoryUpdate.Id)
                 .Where(efCategory => efCategory.EmailUserId == this.sessionContext.AdminEmailUserId)
                 .SingleOrDefault();
+
+            //var parentHierarchyId = efCategory.HierarchyId.GetAncestor(1);
+
+            //var parentHierarchyId = this.dbContext.Categories
+            //    .SingleOrDefault(cat => cat == efCategory.HierarchyId.GetAncestor())?
+            //    .HierarchyId;
+
+            //dbCategoryUpdate.ParentHierarchyId = this.dbContext.Categories
+            //    .Single(cat => cat.Id == dbCategoryUpdate.SuperCategoryId);
 
             DbCategory.UpdateEfCategory(efCategory, dbCategoryUpdate);
 

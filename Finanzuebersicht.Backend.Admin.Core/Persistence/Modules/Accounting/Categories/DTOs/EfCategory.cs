@@ -1,6 +1,7 @@
 using Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.AccountingEntries;
 using Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Categories;
 using Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.CategorySearchTerms;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
@@ -23,9 +24,11 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
 
         public virtual ICollection<EfCategory> ChildCategories { get; set; }
 
-        public Guid? SuperCategoryId { get; set; }
+        public HierarchyId HierarchyId { get; set; }
 
-        public virtual EfCategory SuperCategory { get; set; }
+        public EfCategory Parent { get; set; }
+
+        public HierarchyId ParentId { get; set; }
 
         public virtual ICollection<EfCategorySearchTerm> CategorySearchTerms { get; set; }
 

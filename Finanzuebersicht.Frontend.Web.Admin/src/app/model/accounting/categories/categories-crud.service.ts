@@ -19,7 +19,7 @@ export class CategoriesCrudService {
     }
 
     public async getSummedCategories(): Promise<ICategoryChartItem[]> {
-        const url = '/api/accounting/categories/all-summed';
+        const url = '/api/accounting/categories/all-summed?supercategoryId=null';
         return await this.backendCoreService.get<ICategoryChartItem[]>(url);
     }
 

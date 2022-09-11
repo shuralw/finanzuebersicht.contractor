@@ -90,7 +90,10 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence
                 connectionStringTemplate = connectionStringTemplate.Replace("{{DatabaseName}}", section.GetSection("DatabaseName").Value);
                 connectionStringTemplate = connectionStringTemplate.Replace("{{Username}}", section.GetSection("Username").Value);
                 connectionStringTemplate = connectionStringTemplate.Replace("{{Password}}", section.GetSection("Password").Value);
-                optionsBuilder.UseSqlServer(connectionStringTemplate);
+                optionsBuilder.UseSqlServer(connectionStringTemplate, config =>
+                {
+                    config.UseHierarchyId();
+                });
             }
         }
 
@@ -746,11 +749,6 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence
                 entity.ToTable("Categories");
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.SuperCategory)
-                    .WithMany(p => p.ChildCategories)
-                    .HasForeignKey(d => d.SuperCategoryId)
-                    .HasConstraintName("FK_Categories_SuperCategoryId");
 
                 entity.Property(e => e.Title)
                     .IsRequired()

@@ -38,7 +38,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Persistence.Modules.Accounting.Cat
                 Id = efCategory.Id,
                 AccountingEntries = efCategory.AccountingEntries.Select(efAccountingEntry => DbAccountingEntry.FromEfAccountingEntry(efAccountingEntry)),
                 ChildCategories = efCategory.ChildCategories.Select(efCategory => DbCategory.FromEfCategory(efCategory)),
-                SuperCategory = DbCategory.FromEfCategory(efCategory.SuperCategory),
+                SuperCategory = DbCategory.FromEfCategory(efCategory.Parent),
                 CategorySearchTerms = efCategory.CategorySearchTerms.Select(efCategorySearchTerm => DbCategorySearchTerm.FromEfCategorySearchTerm(efCategorySearchTerm)),
                 Title = efCategory.Title,
                 Color = efCategory.Color,

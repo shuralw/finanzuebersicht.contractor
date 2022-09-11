@@ -11,7 +11,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Contract.Logic.Modules.Accounting.
 
         ILogicResult DeleteCategory(Guid categoryId);
 
-        ILogicResult<IEnumerable<ICategoryChartItem>> GetAllSummedCategories();
+        ILogicResult<IEnumerable<ICategoryChartItem>> GetAllSummedCategories(Guid? supercategoryId);
 
         ILogicResult<ICategoryDetail> GetCategoryDetail(Guid categoryId);
 

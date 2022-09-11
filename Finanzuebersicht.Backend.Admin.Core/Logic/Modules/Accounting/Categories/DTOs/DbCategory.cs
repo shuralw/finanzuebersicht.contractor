@@ -7,7 +7,7 @@ namespace Finanzuebersicht.Backend.Admin.Core.Logic.Modules.Accounting.Categorie
     {
         public Guid Id { get; set; }
 
-        public Guid? SuperCategoryId { get; set; }
+        public object ParentId { get; set; }
 
         public string Title { get; set; }
 
