@@ -39,26 +39,12 @@ export class UploadComponent implements OnInit {
     this.startUpload(formData)
       .then(value => {
         this.inProgress = false;
-        console.log('inProgress ended.');
+        this.onUploadFinished.emit();
       });
-    // this.http.post('http://localhost:5010/api/accounting/accounting-entries/multiple',
-    //   formData, { reportProgress: true, observe: 'events' })
-    //   .subscribe({
-    //     next: (event) => {
-    //       if (event.type === HttpEventType.UploadProgress)
-    //         this.progress = Math.round(100 * event.loaded / event.total);
-    //       else if (event.type === HttpEventType.Response) {
-    //         this.message = 'Upload success.';
-    //         this.onUploadFinished.emit(event.body);
-    //       }
-    //     },
-    //     error: (err: HttpErrorResponse) => console.log(err)
-    //   });
   }
 
   startUpload(formData: FormData): Promise<string> {
     const result = this.accountingEntriesCrudService.createAccountingEntries(formData);
-    console.log('inProgress');
     this.inProgress = true;
     return result;
   }

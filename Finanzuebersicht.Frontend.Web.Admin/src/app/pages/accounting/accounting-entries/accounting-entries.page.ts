@@ -162,4 +162,8 @@ export class AccountingEntriesPage implements AfterViewInit, OnInit {
   customizeColor(point): { color: string } {
     return { color: point.data.color };
   }
+
+  onUploadFinished() {
+    this.accountingEntriesDataSource.triggerUpdate();
+  }
 }
